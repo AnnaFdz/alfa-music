@@ -1,24 +1,15 @@
 import { Outlet } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import FooterBar from "../components/Footer";
-// import "../App.css"
+import { AuthProvider } from "../contexts/AuthContext";
 
 
 
 export default function Layout() {
     return (
-       <>
-       <div >
-            <Navbar appName={"AlfA Music"} />
-            </div>
-            <div className="container">
-            <Outlet />
-            </div>
-            <div className="footer">
-            
-            <FooterBar appName={"AlfA Music"}/>
-            </div>
-        </>
+        <div>
+            <AuthProvider>
+                <Outlet />
+            </AuthProvider>
+        </div>
         
     );
 }
