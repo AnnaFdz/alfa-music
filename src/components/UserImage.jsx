@@ -21,7 +21,7 @@ function UserImage() {
             if (data.image) {
                 setImgURL(data.image);
             } else {
-                console.warn('No image found in the response.');
+                console.warn('No se encontró una imagen en la respuesta.');
                 setImgURL(defaultImage);
             }
         }).catch((e) => {
