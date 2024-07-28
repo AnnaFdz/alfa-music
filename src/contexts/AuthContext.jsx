@@ -16,13 +16,15 @@ function reducer(state, action) {
         case ACTIONS.LOGIN:
             return {
                 ...state,
-                token: action.payload,
+                token: action.payload.token,
+                userID: action.payload.userID,
                 isAuthenticated: true,
             };
         case ACTIONS.LOGOUT:
             return {
                 isAuthenticated: false,
                 token: null,
+                userID: null,
             };
         default:
             return state;
@@ -40,8 +42,8 @@ function AuthProvider({ children }) {
     const location = useLocation();
 
     const actions = {
-        login: (token) => {
-            dispatch({ type: ACTIONS.LOGIN, payload: token });
+        login: (token, userID) => {
+            dispatch({ type: ACTIONS.LOGIN, payload: { token, userID }});
             const origin = location.state?.from?.pathname || "/";
             navigate(origin);
         },

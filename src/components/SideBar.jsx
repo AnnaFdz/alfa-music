@@ -3,6 +3,7 @@ import SideBarChoice from "./SideBarChoice";
 import useFetch from "../hooks/useFetch";
 import { useEffect, useState } from "react";
 import "../styles/sidebar.css"
+import UserImage from "./UserImage";
 function SideBar({onPlaylistCreate, onModifyingPlaylist, playlistUpdated, setPlaylistUpdated}) {
     const [{data, isError, isLoading}, doFetch] = useFetch('https://sandbox.academiadevelopers.com/harmonyhub/playlists/',
         {}
@@ -35,7 +36,7 @@ function SideBar({onPlaylistCreate, onModifyingPlaylist, playlistUpdated, setPla
     return (
         <>
             <div className="container">
-                <img src={logo} alt="LOGO"/>
+                <UserImage/>
                 <SideBarChoice title={"Inicio"}>
                     <i className="fa-solid fa-house"></i>
                 </SideBarChoice>

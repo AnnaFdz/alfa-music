@@ -37,7 +37,22 @@ function Login() {
 
     useEffect(() => {
         if (data && !isError && triggerFetch) {
-            login(data.token);
+            const { token } = data;
+            fetch("https://sandbox.academiadevelopers.com/users/profiles/", {
+                headers: {
+                    Authorization: `Token ${token}`,
+                },
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error al obtener el perfil: ${response.status}`);
+                }
+                return response.json();
+            }).then(profileData => {
+                const userID = profileData[0].user__id;
+                login(data.token);
+            }).catch(error => {
+                console.error("Error al obtener el perfil del usuario:", error);
+            })
         }
     }, [data, isError, triggerFetch]);
 
