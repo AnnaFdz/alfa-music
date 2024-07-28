@@ -1,0 +1,48 @@
+.container {
+    flex: 0.2;
+    height: 100vh;
+    background-color: black;
+    color: white;
+    text-align: center;
+}
+.container > img{
+        height: 5rem;
+        padding: 10px;
+        margin-right: auto;
+        border-radius: 50%;
+    };
+.container > hr {
+    border: 1px solid gray;
+    width: 90%;
+    margin: 10px auto;
+}
+
+.choice {
+    display: flex;
+    align-items: center;
+    color: gray;
+    height: 2rem;
+    cursor: pointer;
+    font-size:1rem;
+    margin-left:1rem;
+    gap: 1rem;
+    transition: 100ms color ease-in;
+}
+.choice:hover{
+        color: white;
+    }
+
+.submenu {
+    display: flex;
+    margin-left: .2rem;
+    border: 1px solid gray;
+}
+.submenu > span {
+    font-size:.9rem;
+}
+
+.playlist {
+    margin: 5px 10px;
+    font-size: 1rem;
+    cursor: default;
+}
