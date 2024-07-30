@@ -9,7 +9,7 @@ function SideBar({onPlaylistCreate, onModifyingPlaylist, playlistUpdated, setPla
         {}
     );
     const [isPlaylistExtended, setIsPlaylistExtended] = useState(false);
-
+    
     const handlePlaylistCreate = () => {
         onPlaylistCreate(true);
     }
@@ -66,7 +66,7 @@ function SideBar({onPlaylistCreate, onModifyingPlaylist, playlistUpdated, setPla
 
                 <div className="playlist">Playlist</div>
                 <hr />
-                {data && data.map((song) => (
+                {data && data.results.map((song) => (
                     <SideBarChoice key={song.id} title={song.name}/>
                 ))}
             </div>

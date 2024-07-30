@@ -1,9 +1,10 @@
-function Paginacion(){
+export default function Paginacion() {
     
     return(
         <>
-        
-        <nav className="pagination" role="navigation" aria-label="pagination">
+        <div className="containerDos">
+           <br />
+        <div className="pagination" role="navigation" aria-label="pagination">
             <a className="pagination-previous is-disabled" title="This is the first page"
             >Previous</a
             >
@@ -24,9 +25,8 @@ function Paginacion(){
                 <a href="#" className="pagination-link" aria-label="Goto page 3">3</a>
             </li>
             </ul>
-        </nav>
-        
+        </div>
+        </div>
         </>
         );
 }
-export {Paginacion};
