@@ -48,8 +48,14 @@ function Login() {
                 }
                 return response.json();
             }).then(profileData => {
-                const userID = profileData[0].user__id;
-                login(data.token);
+                const user = profileData.results.find(user => user.username == username);
+                console.log(`User ${user.username}`);
+                if (user) {
+                    const userID = user.user__id;
+                    login(token, userID);
+                } else {
+                    console.error("No se encontró un usuario con ese nombre de usuario");
+                }
             }).catch(error => {
                 console.error("Error al obtener el perfil del usuario:", error);
             })

@@ -5,12 +5,14 @@ import Paginacion from "./Paginacion";
 import Tabs from "./Tabs";
 import SideBar from "../components/SideBar";
 import { useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
 
 
 export default function Home() {
   const [showPlaylistForm, setShowPlaylistForm] = useState(false);
   const [isModifyingPlaylist, setIsModifyingPlaylist] = useState(false);
   const [playlistUpdated, setPlaylistUpdated] = useState(false);
+  const {isAuthenticated} = useAuth("state");
 
   const handlePlaylistCreate = (showForm) => {
     setShowPlaylistForm(showForm);
@@ -21,6 +23,18 @@ export default function Home() {
   }
   return (
     <>
+     <div className="body">
+      {isAuthenticated? (
+        <SideBar
+          onPlaylistCreate={handlePlaylistCreate}
+          onModifyingPlaylist={handleModifyPlaylist}
+          setPlaylistUpdated={setPlaylistUpdated}  
+        />
+      ): null}
+      <Paginacion/>
+      <div>
+        <Tabs/>
+      </div>
     <div className="containerT">
          <Tabs/>
          </div>
