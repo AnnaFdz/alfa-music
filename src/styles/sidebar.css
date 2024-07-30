@@ -1,6 +1,6 @@
 .container {
     flex: 0.2;
-    height: 100vh;
+    /* height: 100vh; */
     background-color: black;
     color: white;
     text-align: center;

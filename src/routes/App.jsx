@@ -3,7 +3,9 @@ import Home from "../components/Home";
 import About from "../components/About";
 import Layout from "./Layout";
 import Login from "../components/Login";
-
+import Songs from "../components/Songs";
+import Albums from "../components/Albums";
+import Artists from "../components/Artists";
 
 const App = createBrowserRouter([
     {
@@ -12,8 +14,32 @@ const App = createBrowserRouter([
             {
                 path: "/",
                 element: <Home />,
+                
             },
-          
+            {
+                path: "albums",
+                element: 
+                    
+                    <Albums/>,
+                    
+                
+            },
+            {
+                path: "artists",
+                element: 
+                    
+                    <Artists/>,
+                    
+                
+            },
+            {
+                path: "artists",
+                element: 
+                    
+                    <h1>artists</h1>,
+                    
+                
+            },
             {
                 path: "/about",
                 element: <About />,

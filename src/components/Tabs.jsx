@@ -1,11 +1,12 @@
-export default function Tabs() {
-    
+import { Link } from "react-router-dom";
 
+export default function Tabs() {
     return (
         <p className="panel-tabs">
-        <a className="is-active">Album</a>
-        <a>Artista</a>
-        
-      </p>
+            <Link to="/" className="is-active">Songs</Link>
+            <Link to="/albums">Albums</Link>
+            <Link to="/artists">Artists</Link>
+            
+        </p>
     );
 }
