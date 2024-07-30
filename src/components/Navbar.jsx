@@ -16,7 +16,7 @@ export default function Navbar({appName}) {
                     
                      
                 <div className="navbar-start">
-                <figure class="image is-128x128-center">
+                <figure className="image is-128x128-center">
               <img
                 className="is-rounded" 
                 src={Logo}

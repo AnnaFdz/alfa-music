@@ -35,6 +35,7 @@ function AuthProvider({ children }) {
     const [state, dispatch] = useReducer(reducer, {
         isAuthenticated: false,
         token: null,
+        userID: null,
     });
 
 

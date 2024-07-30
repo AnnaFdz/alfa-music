@@ -4,7 +4,11 @@ import useFetch from "../hooks/useFetch";
 import { useEffect, useState } from "react";
 import "../styles/sidebar.css"
 import UserImage from "./UserImage";
+import { useAuth } from "../contexts/AuthContext";
 function SideBar({onPlaylistCreate, onModifyingPlaylist, playlistUpdated, setPlaylistUpdated}) {
+    const { userID } = useAuth("state");
+    console.log(userID);
+
     const [{data, isError, isLoading}, doFetch] = useFetch('https://sandbox.academiadevelopers.com/harmonyhub/playlists/',
         {}
     );
@@ -33,6 +37,9 @@ function SideBar({onPlaylistCreate, onModifyingPlaylist, playlistUpdated, setPla
     if (isError) return <h1>Error al traer las playlists</h1>
     if (!data) return <h1>No hay canciones Disponibles</h1>
     
+
+    const userPlaylists = data.results?data.results.filter(playlist => playlist.owner === userID): [];
+
     return (
         <>
             <div className="container">
@@ -66,9 +73,9 @@ function SideBar({onPlaylistCreate, onModifyingPlaylist, playlistUpdated, setPla
 
                 <div className="playlist">Playlist</div>
                 <hr />
-                {data.result && data.result.map((song) => (
-                    <SideBarChoice key={song.id} title={song.name}/>
-                ))}
+                {userPlaylists.length > 0 ? userPlaylists.map((playlist) => (
+                    <SideBarChoice key={playlist.id} title={playlist.name} />
+                )) : <p>No hay playlists disponibles.</p>}
             </div>
         </>
     )
