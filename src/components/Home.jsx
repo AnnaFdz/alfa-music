@@ -31,6 +31,7 @@ export default function Home() {
           setPlaylistUpdated={setPlaylistUpdated}  
         />
       ): null}
+      </div>
       <Paginacion/>
       <div>
         <Tabs/>
