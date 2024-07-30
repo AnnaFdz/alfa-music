@@ -13,7 +13,7 @@ function SideBar({onPlaylistCreate, onModifyingPlaylist, playlistUpdated, setPla
         {}
     );
     const [isPlaylistExtended, setIsPlaylistExtended] = useState(false);
-
+    
     const handlePlaylistCreate = () => {
         onPlaylistCreate(true);
     }
@@ -76,6 +76,7 @@ function SideBar({onPlaylistCreate, onModifyingPlaylist, playlistUpdated, setPla
                 {userPlaylists.length > 0 ? userPlaylists.map((playlist) => (
                     <SideBarChoice key={playlist.id} title={playlist.name} />
                 )) : <p>No hay playlists disponibles.</p>}
+
             </div>
         </>
     )

@@ -24,6 +24,7 @@ export default function Navbar({appName}) {
                 style={{ height: "100px", width: "100px" }}
               />
             </figure>
+                <p className="navbar-item">{appName}</p>
                     <NavLink
                         to="/"
                         className={({ isActive, isPending, isTransitioning }) =>
@@ -55,11 +56,23 @@ export default function Navbar({appName}) {
                 </div>
                 <div className="navbar-end">
                 <div className="navbar-item">
-                <div className="buttons">
+                <div className="button is-danger">
                     
-                    <a className="button is-danger">
-                    Login
-                    </a>
+                <NavLink
+                        to="/login"
+                        style={({ isActive }) =>
+                            isActive ? { color: "red" } : {}
+                        }
+                        className={({ isActive, isPending, isTransitioning }) =>
+                            [
+                                isPending ? "pending" : "",
+                                isActive ? "has-text-primary" : "",
+                                isTransitioning ? "transitioning" : "",
+                            ].join(" navbar-item")
+                        }
+                    >
+                        Login
+                    </NavLink>
                 </div>
                 </div>
             </div>
