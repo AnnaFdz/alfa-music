@@ -65,7 +65,7 @@ function SideBar({onPlaylistCreate, onModifyingPlaylist, playlistUpdated, setPla
 
                 <div className="playlist">Playlist</div>
                 <hr />
-                {data && data.map((song) => (
+                {data.result && data.result.map((song) => (
                     <SideBarChoice key={song.id} title={song.name}/>
                 ))}
             </div>
