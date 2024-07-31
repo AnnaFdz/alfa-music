@@ -41,45 +41,36 @@ function SideBar({onPlaylistCreate, onModifyingPlaylist, playlistUpdated, setPla
     const userPlaylists = data.results?data.results.filter(playlist => playlist.owner === userID): [];
 
     return (
-        <>
-            <div className="container">
-                <UserImage/>
-                <SideBarChoice title={"Inicio"}>
-                    <i className="fa-solid fa-house"></i>
-                </SideBarChoice>
-                <SideBarChoice title={"Playlists"} onClick={handlePlaylistToggle}>
-                    <i className="fa-solid fa-music"></i>
-                </SideBarChoice>
-                {isPlaylistExtended && (
-                    <>
-                        <div className="submenu">
-                            <SideBarChoice title={"Crear Playlist"} onClick={handlePlaylistCreate}>
-                                <i className="fa-solid fa-plus"></i>
-                            </SideBarChoice>
-                        </div>
-                        <div className="submenu">
-                            <SideBarChoice title={"Modificar Playlist"} onClick={onModifyingPlaylist}>
-                                <i className="fa-regular fa-pen-to-square"></i>
-                            </SideBarChoice>
-                        </div>
-                        <div className="submenu">
-                            <SideBarChoice title={"Eliminar Playlist"} onClick={onModifyingPlaylist}>
-                                <i className="fa-solid fa-eraser"></i>
-                            </SideBarChoice>
-                        </div>
-                    </>
-                    
-                )}
-
-                <div className="playlist">Playlist</div>
-                <hr />
+        <aside className="menu">
+            <UserImage />
+            <ul className="menu-list">
+                <li>
+                    <SideBarChoice title={"Playlists"} onClick={handlePlaylistToggle}/>
+                    {isPlaylistExtended && (
+                        <ul>
+                            <li>
+                                <SideBarChoice title={"Crear Playlist"} onClick={handlePlaylistCreate}/>
+                            </li>
+                            <li>
+                                <SideBarChoice title={"Modificar Playlist"} onClick={onModifyingPlaylist}/>
+                            </li>
+                            <li>
+                                <SideBarChoice title={"Eliminar Playlist"} onClick={onModifyingPlaylist}/>
+                            </li>
+                        </ul>
+                    )}
+                </li>
+            </ul>
+            <p className="menu-label">Playlist</p>
+            <ul className="menu-list">
                 {userPlaylists.length > 0 ? userPlaylists.map((playlist) => (
-                    <SideBarChoice key={playlist.id} title={playlist.name} />
+                    <li key={playlist.id}>
+                        <SideBarChoice title={playlist.name} />
+                    </li>
                 )) : <p>No hay playlists disponibles.</p>}
-
-            </div>
-        </>
-    )
+            </ul>
+        </aside>
+    );
 }
 
 export default SideBar;
