@@ -38,29 +38,38 @@ function Login() {
     useEffect(() => {
         if (data && !isError && triggerFetch) {
             const { token } = data;
-            fetch("https://sandbox.academiadevelopers.com/users/profiles/", {
-                headers: {
-                    Authorization: `Token ${token}`,
-                },
-            }).then(response => {
-                if (!response.ok) {
-                    throw new Error(`Error al obtener el perfil: ${response.status}`);
-                }
-                return response.json();
-            }).then(profileData => {
-                const user = profileData.results.find(user => user.username == username);
-                console.log(`User ${user.username}`);
-                if (user) {
-                    const userID = user.user__id;
-                    login(token, userID);
-                } else {
-                    console.error("No se encontró un usuario con ese nombre de usuario");
-                }
-            }).catch(error => {
-                console.error("Error al obtener el perfil del usuario:", error);
-            })
+
+            const fetchProfileData = (url) => {
+                fetch(url, {
+                    headers: {
+                        Authorization: `Token ${token}`,
+                    },
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Error al obtener el perfil: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(profileData => {
+                    const user = profileData.results.find(user => user.username === username);
+                    if (user) {
+                        console.log(`User ${user.username}`);
+                        login(token, user.user__id);
+                    } else if (profileData.next) {
+                        fetchProfileData(profileData.next);
+                    } else {
+                        console.error("No se encontró un usuario con ese nombre de usuario");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error al obtener el perfil del usuario:", error);
+                });
+            };
+
+            fetchProfileData("https://sandbox.academiadevelopers.com/users/profiles/");
         }
-    }, [data, isError, triggerFetch]);
+    }, [data, isError, triggerFetch, username, login]);
 
     return (
         <div className="page-background">

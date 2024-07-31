@@ -23,15 +23,6 @@ export default function Home() {
   }
   return (
     <>
-     <div className="body">
-      {isAuthenticated? (
-        <SideBar
-          onPlaylistCreate={handlePlaylistCreate}
-          onModifyingPlaylist={handleModifyPlaylist}
-          setPlaylistUpdated={setPlaylistUpdated}  
-        />
-      ): null}
-      </div>
       <Paginacion/>
       <div>
         <Tabs/>
@@ -43,12 +34,14 @@ export default function Home() {
      
         <div className="columns">
                 <div className="column-start body is-one-fifth">
-                     <SideBar
-                        onPlaylistCreate={handlePlaylistCreate}
-                        onModifyingPlaylist={handleModifyPlaylist}
-                        setPlaylistUpdated={setPlaylistUpdated}  
-                    /> 
-                      </div>
+                {isAuthenticated? (
+                  <SideBar
+                    onPlaylistCreate={handlePlaylistCreate}
+                    onModifyingPlaylist={handleModifyPlaylist}
+                    setPlaylistUpdated={setPlaylistUpdated}  
+                  />
+                  ): null}
+                </div>
                  <div className="column is-10">
                     <div className="containerDos">
                         <div className='box box2 has-background-danger-60'>

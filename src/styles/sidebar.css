@@ -1,17 +1,16 @@
-.container {
-    flex: 0.2;
-    /* height: 100vh; */
-    background-color: black;
+.menu {
+    width: 10rem;
+    background: linear-gradient(135deg, #ffcccc, #ffe6e6);
     color: white;
     text-align: center;
 }
-.container > img{
-        height: 5rem;
+.menu > img{
+        height: 4rem;
         padding: 10px;
         margin-right: auto;
         border-radius: 50%;
     };
-.container > hr {
+hr {
     border: 1px solid gray;
     width: 90%;
     margin: 10px auto;
@@ -19,25 +18,29 @@
 
 .choice {
     display: flex;
+    padding: 1px;
+    margin-bottom: .2rem;
     align-items: center;
-    color: gray;
+    background: linear-gradient(135deg, #e98686, #c45050);
     height: 2rem;
     cursor: pointer;
-    font-size:1rem;
+    font-size:.9rem;
     margin-left:1rem;
     gap: 1rem;
     transition: 100ms color ease-in;
 }
 .choice:hover{
-        color: white;
+        color: black;
     }
 
-.submenu {
+.menu-list {
     display: flex;
+    flex-direction: column;
     margin-left: .2rem;
-    border: 1px solid gray;
+    background: linear-gradient(135deg, #e98686, #ffe6e6);
+
 }
-.submenu > span {
+.menu-list > span {
     font-size:.9rem;
 }
 
