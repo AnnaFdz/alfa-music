@@ -31,6 +31,7 @@ function reducer(state, action) {
 
 function useFetch(url, options = {}) {
     const [state, dispatch] = useReducer(reducer, {
+        data: null,
         isError: false,
         isLoading: true,
     });
