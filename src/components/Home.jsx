@@ -23,10 +23,6 @@ export default function Home() {
   }
   return (
     <>
-      <Paginacion/>
-      <div>
-        <Tabs/>
-      </div>
     <div className="containerT">
          <Tabs/>
          </div>

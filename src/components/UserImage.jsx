@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import defaultImage from "./imgs/userIMGDefault.png";
 import { useAuth } from "../contexts/AuthContext";
+import "../styles/sidebar.css";
 
 function UserImage() {
     const { token, userID } = useAuth("state");
@@ -19,7 +20,7 @@ function UserImage() {
             return response.json();
         }).then((data) => {
             if (data.image) {
-                setImgURL(data.image);
+                setImgURL('https://sandbox.academiadevelopers.com/'+data.image);
             } else {
                 console.warn('No se encontró una imagen en la respuesta.');
                 setImgURL(defaultImage);
@@ -30,7 +31,7 @@ function UserImage() {
     }, [token, userID]);
 
     return (
-        <div>
+        <div className="profileImg"> 
             <img src={imgURL} alt="User Image" />
         </div>
     );

@@ -1,33 +1,56 @@
-import logo from "./imgs/Logointro.jpeg";
 import SideBarChoice from "./SideBarChoice";
 import useFetch from "../hooks/useFetch";
 import { useEffect, useState } from "react";
 import "../styles/sidebar.css"
 import UserImage from "./UserImage";
 import { useAuth } from "../contexts/AuthContext";
-function SideBar({onPlaylistCreate, onModifyingPlaylist, playlistUpdated, setPlaylistUpdated}) {
-    const { userID } = useAuth("state");
-    console.log(userID);
+import { useNavigate } from "react-router-dom";
 
-    const [{data, isError, isLoading}, doFetch] = useFetch('https://sandbox.academiadevelopers.com/harmonyhub/playlists/',
-        {}
-    );
+function SideBar({onModifyingPlaylist, playlistUpdated, setPlaylistUpdated}) {
+    const { userID } = useAuth("state");
+    const navigate = useNavigate();
     const [isPlaylistExtended, setIsPlaylistExtended] = useState(false);
+    const [playlists, setPlaylists] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isError, setIsError] = useState(false);
     
     const handlePlaylistCreate = () => {
-        onPlaylistCreate(true);
+        navigate("/form");
+
+    }
+
+    const fetchPlaylists = async (url) => {
+        setIsLoading(true);
+        setIsError(false);
+
+        try {
+            let allPlaylists = [];
+            let nextUrl = url;
+
+            while (nextUrl) {
+                const response = await fetch(nextUrl);
+                const data = await response.json();
+                allPlaylists = [...allPlaylists,...data.results];
+                nextUrl = data.next;
+            }
+            setPlaylists(allPlaylists);
+        } catch (error) {
+            setIsError(true);
+        } finally {
+            setIsLoading(false);
+        }
     }
 
     useEffect(() => {
-            doFetch();   
-    },[]);
+        fetchPlaylists(`https://sandbox.academiadevelopers.com/harmonyhub/playlists/`);
+    }, []);
 
     useEffect(() => {
         if (playlistUpdated) {
-            doFetch();
+            fetchPlaylists('https://sandbox.academiadevelopers.com/harmonyhub/playlists/');
             setPlaylistUpdated(false);
         }
-    }, [playlistUpdated, doFetch, setPlaylistUpdated])
+    }, [playlistUpdated, setPlaylistUpdated])
 
     const handlePlaylistToggle = () => {
         setIsPlaylistExtended(!isPlaylistExtended);
@@ -35,10 +58,9 @@ function SideBar({onPlaylistCreate, onModifyingPlaylist, playlistUpdated, setPla
 
     if (isLoading) return <h1>Cargando...</h1>
     if (isError) return <h1>Error al traer las playlists</h1>
-    if (!data) return <h1>No hay canciones Disponibles</h1>
+    if (!playlists) return <h1>No hay playlists Disponibles</h1>
     
-
-    const userPlaylists = data.results?data.results.filter(playlist => playlist.owner === userID): [];
+    const userPlaylists = playlists.filter(playlist => playlist.owner === userID);
 
     return (
         <aside className="menu">

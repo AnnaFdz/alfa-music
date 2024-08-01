@@ -6,6 +6,7 @@ import Login from "../components/Login";
 import Songs from "../components/Songs";
 import Albums from "../components/Albums";
 import Artists from "../components/Artists";
+import PlaylistForm from "../components/PlaylistForm";
 
 const App = createBrowserRouter([
     {
@@ -47,6 +48,10 @@ const App = createBrowserRouter([
             {
                 path: "/login",
                 element: <Login />,
+            },
+            {
+                path: "/form",
+                element: <PlaylistForm />,
             },
             {
                 path: "*",
