@@ -15,7 +15,14 @@ function SideBar({onModifyingPlaylist, playlistUpdated, setPlaylistUpdated}) {
 
     const handlePlaylistCreate = () => {
         navigate("/form");
+    }
 
+    const handlePlaylistModify = () => {
+        navigate("/modPlaylist", { state: { userPlaylists}});
+    }
+
+    const handlePlaylistDelete = () => {
+        navigate("/delPlaylist", { state: { userPlaylists}});
     }
 
     const fetchPlaylists = async (url) => {
@@ -77,10 +84,10 @@ function SideBar({onModifyingPlaylist, playlistUpdated, setPlaylistUpdated}) {
                                 <SideBarChoice title={"Crear Playlist"} onClick={handlePlaylistCreate}/>
                             </li>
                             <li>
-                                <SideBarChoice title={"Modificar Playlist"} onClick={onModifyingPlaylist}/>
+                                <SideBarChoice title={"Modificar Playlist"} onClick={handlePlaylistModify}/>
                             </li>
                             <li>
-                                <SideBarChoice title={"Eliminar Playlist"} onClick={onModifyingPlaylist}/>
+                                <SideBarChoice title={"Eliminar Playlist"} onClick={handlePlaylistDelete}/>
                             </li>
                         </ul>
                     )}
