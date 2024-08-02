@@ -1,12 +1,11 @@
 import SideBarChoice from "./SideBarChoice";
-import useFetch from "../hooks/useFetch";
 import { useEffect, useState } from "react";
 import "../styles/sidebar.css"
 import UserImage from "./UserImage";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-function SideBar({onModifyingPlaylist, playlistUpdated, setPlaylistUpdated}) {
+function SideBar({playlistUpdated, setPlaylistUpdated}) {
     const { userID } = useAuth("state");
     const navigate = useNavigate();
     const [isPlaylistExtended, setIsPlaylistExtended] = useState(false);
@@ -16,7 +15,14 @@ function SideBar({onModifyingPlaylist, playlistUpdated, setPlaylistUpdated}) {
     
     const handlePlaylistCreate = () => {
         navigate("/form");
+    }
 
+    const handlePlaylistModify = () => {
+        navigate("/modPlaylist", { state: { userPlaylists}});
+    }
+
+    const handlePlaylistDelete = () => {
+        navigate("/delPlaylist", { state: { userPlaylists}});
     }
 
     const fetchPlaylists = async (url) => {
@@ -74,10 +80,10 @@ function SideBar({onModifyingPlaylist, playlistUpdated, setPlaylistUpdated}) {
                                 <SideBarChoice title={"Crear Playlist"} onClick={handlePlaylistCreate}/>
                             </li>
                             <li>
-                                <SideBarChoice title={"Modificar Playlist"} onClick={onModifyingPlaylist}/>
+                                <SideBarChoice title={"Modificar Playlist"} onClick={handlePlaylistModify}/>
                             </li>
                             <li>
-                                <SideBarChoice title={"Eliminar Playlist"} onClick={onModifyingPlaylist}/>
+                                <SideBarChoice title={"Eliminar Playlist"} onClick={handlePlaylistDelete}/>
                             </li>
                         </ul>
                     )}
