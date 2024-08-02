@@ -1,12 +1,14 @@
 import { Link, NavLink } from "react-router-dom";
 import Logo from '../assets/Logointro.jpeg';
-
+import { useAuth } from "../contexts/AuthContext";
 import "../App.css";
 
 
 
 
 export default function Navbar({appName}) {
+    const { isAuthenticated } = useAuth("state");
+    const { logout } = useAuth("actions");
     return (
         <header >
             <nav
@@ -58,7 +60,16 @@ export default function Navbar({appName}) {
                 <div className="navbar-item">
                 <div className="button is-danger">
                     
-                <NavLink
+                {isAuthenticated ? (
+                    
+                     <button
+                     onClick={logout}
+                     className="navbar-item button is-danger"
+                 >
+                     Logout
+                 </button>
+                ):(
+                    <NavLink
                         to="/login"
                         style={({ isActive }) =>
                             isActive ? { color: "red" } : {}
@@ -73,6 +84,8 @@ export default function Navbar({appName}) {
                     >
                         Login
                     </NavLink>
+                )}
+                
                 </div>
                 </div>
             </div>

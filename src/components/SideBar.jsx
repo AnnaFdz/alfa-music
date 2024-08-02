@@ -5,14 +5,14 @@ import UserImage from "./UserImage";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-function SideBar({playlistUpdated, setPlaylistUpdated}) {
-    const { userID } = useAuth("state");
+function SideBar({onModifyingPlaylist, playlistUpdated, setPlaylistUpdated}) {
+    const { userID, isAuthenticated } = useAuth("state");
     const navigate = useNavigate();
     const [isPlaylistExtended, setIsPlaylistExtended] = useState(false);
     const [playlists, setPlaylists] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
-    
+
     const handlePlaylistCreate = () => {
         navigate("/form");
     }
@@ -48,26 +48,30 @@ function SideBar({playlistUpdated, setPlaylistUpdated}) {
     }
 
     useEffect(() => {
-        fetchPlaylists(`https://sandbox.academiadevelopers.com/harmonyhub/playlists/`);
-    }, []);
+        if (isAuthenticated) {
+            fetchPlaylists(`https://sandbox.academiadevelopers.com/harmonyhub/playlists/`);
+        }
+    }, [isAuthenticated]);
 
     useEffect(() => {
-        if (playlistUpdated) {
+        if (playlistUpdated && isAuthenticated) {
             fetchPlaylists('https://sandbox.academiadevelopers.com/harmonyhub/playlists/');
             setPlaylistUpdated(false);
         }
-    }, [playlistUpdated, setPlaylistUpdated])
+    }, [playlistUpdated, setPlaylistUpdated, isAuthenticated])
 
     const handlePlaylistToggle = () => {
         setIsPlaylistExtended(!isPlaylistExtended);
     };
-
+    if (!isAuthenticated) {
+        return <h1>No estás autenticado</h1>;
+    }
     if (isLoading) return <h1>Cargando...</h1>
     if (isError) return <h1>Error al traer las playlists</h1>
     if (!playlists) return <h1>No hay playlists Disponibles</h1>
     
-    const userPlaylists = playlists.filter(playlist => playlist.owner === userID);
-
+    const userPlaylists = playlists.filter(playlist => playlist.owner == userID);
+    
     return (
         <aside className="menu">
             <UserImage />

@@ -1,82 +1,68 @@
-import { useState, useEffect } from 'react';
-import useFetch from '../hooks/useFetch';
-import { useAuth } from '../contexts/AuthContext';
+import { useRef, useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
 import "../styles/login.css";
+
 function Login() {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [triggerFetch, setTriggerFetch] = useState(false);
-    
-    const [{ data, isError, isLoading }, doFetch] = useFetch(
-        "https://sandbox.academiadevelopers.com/api-auth/",
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                username: username,
-                password: password,
-            }),
-        }
-    );
+    const usernameRef = useRef("");
+    const passwordRef = useRef("");
+    const [isError, setIsError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const { login } = useAuth("actions");
-
+    
     function handleSubmit(event) {
         event.preventDefault();
-        setTriggerFetch(true);
-        doFetch();
-    }
-
-    function handleChange(event) {
-        const { name, value } = event.target;
-        if (name === "username") setUsername(value);
-        if (name === "password") setPassword(value);
-    }
-
-    useEffect(() => {
-        if (data && !isError && triggerFetch) {
-            const { token } = data;
-
-            const fetchProfileData = (url) => {
-                fetch(url, {
-                    headers: {
-                        Authorization: `Token ${token}`,
-                    },
-                })
-                .then(response => {
+        if (!isLoading) {
+            setIsLoading(true);
+            fetch("https://sandbox.academiadevelopers.com/api-auth/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    username: usernameRef.current.value,
+                    password: passwordRef.current.value,
+                }),
+            })
+                .then((response) => {
                     if (!response.ok) {
-                        throw new Error(`Error al obtener el perfil: ${response.status}`);
+                        throw new Error("No se pudo iniciar sesión");
                     }
                     return response.json();
                 })
-                .then(profileData => {
-                    const user = profileData.results.find(user => user.username === username);
-                    if (user) {
-                        console.log(`User ${user.username}`);
-                        login(token, user.user__id);
-                    } else if (profileData.next) {
-                        fetchProfileData(profileData.next);
-                    } else {
-                        console.error("No se encontró un usuario con ese nombre de usuario");
-                    }
+                .then((responseData) => {
+                    const { token } = responseData;
+                    fetch("https://sandbox.academiadevelopers.com/users/profiles/profile_data/", {
+                        headers: {
+                            Authorization: `Token ${token}`,
+                        },
+                    })
+                        .then((response) => {
+                            if (!response.ok) {
+                                throw new Error("Error al obtener el perfil del usuario");
+                            }
+                            return response.json();
+                        })
+                        .then((profileData) => {
+                            console.log(`User ${profileData.username}`);
+                            login(token, profileData.user__id);
+                        });
                 })
-                .catch(error => {
-                    console.error("Error al obtener el perfil del usuario:", error);
+                .catch((error) => {
+                    console.error("Error al iniciar sesión", error);
+                    setIsError(true);
+                })
+                .finally(() => {
+                    setIsLoading(false);
                 });
-            };
-
-            fetchProfileData("https://sandbox.academiadevelopers.com/users/profiles/");
         }
-    }, [data, isError, triggerFetch, username, login]);
+    }
 
     return (
         <div className="page-background">
             <div className="form-container">
                 <form id="loginForm" onSubmit={handleSubmit} className="box has-background-dark has-text-white">
                     <h2 className="title is-4 has-text-centered has-text-white">Inicio de Sesión</h2>
-
                     <div className="field">
                         <label className="label has-text-white">Username</label>
                         <div className="control has-icons-left">
@@ -86,14 +72,13 @@ function Login() {
                                 name="username"
                                 id="username"
                                 required
-                                onChange={handleChange}
+                                ref={usernameRef}
                             />
                             <span className="icon is-small is-left">
                                 <i className="fas fa-user"></i>
                             </span>
                         </div>
                     </div>
-
                     <div className="field">
                         <label className="label has-text-white">Password</label>
                         <div className="control has-icons-left">
@@ -103,24 +88,22 @@ function Login() {
                                 name="password"
                                 id="password"
                                 required
-                                onChange={handleChange}
+                                ref={passwordRef}
                             />
                             <span className="icon is-small is-left">
                                 <i className="fas fa-lock"></i>
                             </span>
                         </div>
                     </div>
-
                     <div className="field">
                         <div className="control">
                             <button type="submit" className="button is-primary is-fullwidth">
                                 Iniciar Sesión
                             </button>
+                            {isLoading && <p>Cargando...</p>}
+                            {isError && <p>Error al cargar los datos.</p>}
                         </div>
                     </div>
-
-                    {isLoading && triggerFetch && <p className="has-text-centered has-text-white">Cargando...</p>}
-                    {isError && <p className="has-text-centered has-text-danger">Error al cargar los datos.</p>}
                 </form>
             </div>
         </div>

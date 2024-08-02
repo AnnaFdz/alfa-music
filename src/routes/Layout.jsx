@@ -12,12 +12,13 @@ export default function Layout() {
   
     return (
         <>
+         <AuthProvider>
         <div >
              <Navbar appName={"AlfA Music"} />
              </div>
              
              <div >
-            <AuthProvider>
+           
 
             
                     <div className="containerDos" >
@@ -27,8 +28,9 @@ export default function Layout() {
                         </div>
                         
                     
-            </AuthProvider>
+            
             </div>
+            </AuthProvider>
             <div className="footer">
 
             <FooterBar appName={"AlfA Music"}/>
