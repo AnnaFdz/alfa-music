@@ -42,9 +42,9 @@ export default function Albums() {
                         {/* --------- */}
                             <div className="column">
                               <div className='box'>
-                              <div class="card">
-                                    <div class="card-image">
-                                        <figure class="image is-4by3">
+                              <div className="card">
+                                    <div className="card-image">
+                                        <figure className="image is-4by3">
                                         <img
                                             src="https://bulma.io/assets/images/placeholders/1280x960.png"
                                             alt="Placeholder image"
@@ -52,9 +52,9 @@ export default function Albums() {
                                         </figure>
                                     </div>
                                     
-                                        <div class="media-content">
-                                            <p class="title is-4">album</p>
-                                            <p class="subtitle is-6">titulo</p>
+                                        <div className="media-content">
+                                            <p className="title is-4">album</p>
+                                            <p className="subtitle is-6">titulo</p>
                                         </div>
                                         </div>
                               </div>
@@ -62,9 +62,9 @@ export default function Albums() {
                         {/*---------*/}
                             <div className="column">
                               <div className='box'>
-                              <div class="card">
-                                    <div class="card-image">
-                                        <figure class="image is-4by3">
+                              <div className="card">
+                                    <div className="card-image">
+                                        <figure className="image is-4by3">
                                         <img
                                             src="https://bulma.io/assets/images/placeholders/1280x960.png"
                                             alt="Placeholder image"
@@ -72,9 +72,9 @@ export default function Albums() {
                                         </figure>
                                     </div>
                                     
-                                        <div class="media-content">
-                                            <p class="title is-4">album</p>
-                                            <p class="subtitle is-6">titulo</p>
+                                        <div className="media-content">
+                                            <p className="title is-4">album</p>
+                                            <p className="subtitle is-6">titulo</p>
                                         </div>
                                         </div>
                               </div>
@@ -82,9 +82,9 @@ export default function Albums() {
                         {/*---------*/}
                             <div className="column">
                               <div className='box'>
-                              <div class="card">
-                                    <div class="card-image">
-                                        <figure class="image is-4by3">
+                              <div className="card">
+                                    <div className="card-image">
+                                        <figure className="image is-4by3">
                                         <img
                                             src="https://bulma.io/assets/images/placeholders/1280x960.png"
                                             alt="Placeholder image"
@@ -92,9 +92,9 @@ export default function Albums() {
                                         </figure>
                                     </div>
                                     
-                                        <div class="media-content">
-                                            <p class="title is-4">album</p>
-                                            <p class="subtitle is-6">titulo</p>
+                                        <div className="media-content">
+                                            <p className="title is-4">album</p>
+                                            <p className="subtitle is-6">titulo</p>
                                         </div>
                                         </div>
                               </div>

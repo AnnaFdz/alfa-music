@@ -33,9 +33,9 @@ function reducer(state, action) {
 
 function AuthProvider({ children }) {
     const [state, dispatch] = useReducer(reducer, {
-        isAuthenticated: false,
-        token: null,
-        userID: null,
+        token: localStorage.getItem("authToken"),
+        isAuthenticated: localStorage.getItem("authToken") ? true : false,        
+        userID: localStorage.getItem("authID"),
     });
 
 
@@ -45,11 +45,16 @@ function AuthProvider({ children }) {
     const actions = {
         login: (token, userID) => {
             dispatch({ type: ACTIONS.LOGIN, payload: { token, userID }});
+            localStorage.setItem("authToken", token);
+            localStorage.setItem("authID", userID);
             const origin = location.state?.from?.pathname || "/";
             navigate(origin);
         },
         logout: () => {
             dispatch({ type: ACTIONS.LOGOUT });
+            localStorage.removeItem("authToken");
+            localStorage.removeItem("authID");
+            navigate("/");
         },
     };
 

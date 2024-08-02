@@ -3,10 +3,10 @@ import Home from "../components/Home";
 import About from "../components/About";
 import Layout from "./Layout";
 import Login from "../components/Login";
-import Songs from "../components/Songs";
 import Albums from "../components/Albums";
 import Artists from "../components/Artists";
 import PlaylistForm from "../components/PlaylistForm";
+import ProtectedRoute from "../contexts/ProtectedRout";
 
 const App = createBrowserRouter([
     {
@@ -22,7 +22,6 @@ const App = createBrowserRouter([
                 element: 
                     
                     <Albums/>,
-                    
                 
             },
             {
@@ -30,15 +29,6 @@ const App = createBrowserRouter([
                 element: 
                     
                     <Artists/>,
-                    
-                
-            },
-            {
-                path: "artists",
-                element: 
-                    
-                    <h1>artists</h1>,
-                    
                 
             },
             {
@@ -51,7 +41,11 @@ const App = createBrowserRouter([
             },
             {
                 path: "/form",
-                element: <PlaylistForm />,
+                
+                element:
+                <ProtectedRoute>
+                     <PlaylistForm />
+                </ProtectedRoute>
             },
             {
                 path: "*",
