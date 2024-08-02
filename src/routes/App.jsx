@@ -7,6 +7,10 @@ import Songs from "../components/Songs";
 import Albums from "../components/Albums";
 import Artists from "../components/Artists";
 import PlaylistForm from "../components/PlaylistForm";
+import ModifyForm from "../components/ModifyForm";
+import ModifyPlaylist from "../components/ModifyPlaylist";
+import DeletePlaylist from "../components/DeletePlaylist";
+import ConfirmDelete from "../components/ConfirmDelete";
 
 const App = createBrowserRouter([
     {
@@ -52,6 +56,22 @@ const App = createBrowserRouter([
             {
                 path: "/form",
                 element: <PlaylistForm />,
+            },
+            {
+                path: "/modPlaylist",
+                element: <ModifyPlaylist />,
+            },
+            {
+                path: "/modForm",
+                element: <ModifyForm />,
+            },
+            {
+                path: "/delPlaylist",
+                element: <DeletePlaylist />,
+            },
+            {
+                path: "confirmDelete",
+                element: <ConfirmDelete/>
             },
             {
                 path: "*",
