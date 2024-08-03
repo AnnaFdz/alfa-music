@@ -4,7 +4,6 @@ import Card from "./Card";
 
 export default function Songs() {
     const [page, setPage] = useState(1);
-    // const [nextURL, setNextURL] = useState(null);
     const [songs, setSongs] = useState([]);
     const [isError, setIsError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
