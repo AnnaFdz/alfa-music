@@ -25,8 +25,8 @@ export default function Home() {
          </div>
       
      
-        <div className="columns">
-                <div className="column-start body is-one-fifth">
+        <div className="columns is-gapless">
+                <div className="column is-narrow">
                 {isAuthenticated? (
                   <SideBar
                     onPlaylistCreate={handlePlaylistCreate}
@@ -35,7 +35,7 @@ export default function Home() {
                   />
                   ): null}
                 </div>
-                 <div className="column is-10">
+                 <div className="column is-full">
                     <div className="containerDos">
                         <div className='box box2 has-background-danger-60'>
                           <div className="columns">

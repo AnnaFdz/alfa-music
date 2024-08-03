@@ -12,6 +12,7 @@ import ModifyPlaylist from "../components/ModifyPlaylist";
 import DeletePlaylist from "../components/DeletePlaylist";
 import ConfirmDelete from "../components/ConfirmDelete";
 import Playlist from "../components/Playlist";
+import AddSong from "../components/AddSong";
 
 const App = createBrowserRouter([
     {
@@ -71,6 +72,10 @@ const App = createBrowserRouter([
             {
                 path: "/customPlaylist",
                 element: <Playlist />,
+            },
+            {
+                path: "/addSong",
+                element: <AddSong />,
             },
             {
                 path: "*",
