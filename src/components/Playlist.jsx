@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import "../styles/customPlaylist.css";
 import SideBar from "./SideBar";
@@ -9,6 +9,7 @@ function Playlist() {
     const location = useLocation();
     const { playlistID } = location.state;
     const [songs, setSongs] = useState([]);
+    const navigate = useNavigate();
     
     const [{ data: playlistData, isError: playlistError, isLoading: playlistLoading }, doFetchPlaylist] = useFetch(`https://sandbox.academiadevelopers.com/harmonyhub/playlists/${playlistID}/`, {});
 
@@ -36,8 +37,8 @@ function Playlist() {
          }
      }, [playlistData]);
 
-    const handleAddSong = async (songId) => {
-        // Lógica para agregar la canción a la playlist
+    const handleAddSong = () => {
+        navigate("/addSong");
     };
 
     const handleRemoveSong = async (songId) => {
