@@ -11,6 +11,7 @@ import ModifyForm from "../components/ModifyForm";
 import ModifyPlaylist from "../components/ModifyPlaylist";
 import DeletePlaylist from "../components/DeletePlaylist";
 import ConfirmDelete from "../components/ConfirmDelete";
+import Playlist from "../components/Playlist";
 
 const App = createBrowserRouter([
     {
@@ -66,6 +67,10 @@ const App = createBrowserRouter([
             {
                 path: "confirmDelete",
                 element: <ConfirmDelete/>
+            },
+            {
+                path: "/customPlaylist",
+                element: <Playlist />,
             },
             {
                 path: "*",

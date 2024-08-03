@@ -1,11 +1,11 @@
 import SideBarChoice from "./SideBarChoice";
 import { useEffect, useState } from "react";
-import "../styles/sidebar.css"
+import "../styles/sidebar.css";
 import UserImage from "./UserImage";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-function SideBar({onModifyingPlaylist, playlistUpdated, setPlaylistUpdated}) {
+function SideBar({ onModifyingPlaylist, playlistUpdated, setPlaylistUpdated }) {
     const { userID, isAuthenticated } = useAuth("state");
     const navigate = useNavigate();
     const [isPlaylistExtended, setIsPlaylistExtended] = useState(false);
@@ -15,15 +15,19 @@ function SideBar({onModifyingPlaylist, playlistUpdated, setPlaylistUpdated}) {
 
     const handlePlaylistCreate = () => {
         navigate("/form");
-    }
+    };
 
     const handlePlaylistModify = () => {
-        navigate("/modPlaylist", { state: { userPlaylists}});
-    }
+        navigate("/modPlaylist", { state: { userPlaylists } });
+    };
 
     const handlePlaylistDelete = () => {
-        navigate("/delPlaylist", { state: { userPlaylists}});
-    }
+        navigate("/delPlaylist", { state: { userPlaylists } });
+    };
+
+    const handlePlaylistSongs = (playlistID) => {
+        navigate("/customPlaylist", { state: { playlistID } });
+    };
 
     const fetchPlaylists = async (url) => {
         setIsLoading(true);
@@ -36,7 +40,7 @@ function SideBar({onModifyingPlaylist, playlistUpdated, setPlaylistUpdated}) {
             while (nextUrl) {
                 const response = await fetch(nextUrl);
                 const data = await response.json();
-                allPlaylists = [...allPlaylists,...data.results];
+                allPlaylists = [...allPlaylists, ...data.results];
                 nextUrl = data.next;
             }
             setPlaylists(allPlaylists);
@@ -45,7 +49,7 @@ function SideBar({onModifyingPlaylist, playlistUpdated, setPlaylistUpdated}) {
         } finally {
             setIsLoading(false);
         }
-    }
+    };
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -55,39 +59,40 @@ function SideBar({onModifyingPlaylist, playlistUpdated, setPlaylistUpdated}) {
 
     useEffect(() => {
         if (playlistUpdated && isAuthenticated) {
-            fetchPlaylists('https://sandbox.academiadevelopers.com/harmonyhub/playlists/');
+            fetchPlaylists("https://sandbox.academiadevelopers.com/harmonyhub/playlists/");
             setPlaylistUpdated(false);
         }
-    }, [playlistUpdated, setPlaylistUpdated, isAuthenticated])
+    }, [playlistUpdated, setPlaylistUpdated, isAuthenticated]);
 
     const handlePlaylistToggle = () => {
         setIsPlaylistExtended(!isPlaylistExtended);
     };
+
     if (!isAuthenticated) {
         return <h1>No estás autenticado</h1>;
     }
-    if (isLoading) return <h1>Cargando...</h1>
-    if (isError) return <h1>Error al traer las playlists</h1>
-    if (!playlists) return <h1>No hay playlists Disponibles</h1>
-    
-    const userPlaylists = playlists.filter(playlist => playlist.owner == userID);
-    
+    if (isLoading) return <h1>Cargando...</h1>;
+    if (isError) return <h1>Error al traer las playlists</h1>;
+    if (!playlists) return <h1>No hay playlists disponibles</h1>;
+
+    const userPlaylists = playlists.filter((playlist) => playlist.owner == userID);
+
     return (
         <aside className="menu">
             <UserImage />
             <ul className="menu-list">
                 <li>
-                    <SideBarChoice title={"Playlists"} onClick={handlePlaylistToggle}/>
+                    <SideBarChoice title={"Playlists"} onClick={handlePlaylistToggle} />
                     {isPlaylistExtended && (
                         <ul>
                             <li>
-                                <SideBarChoice title={"Crear Playlist"} onClick={handlePlaylistCreate}/>
+                                <SideBarChoice title={"Crear Playlist"} onClick={handlePlaylistCreate} />
                             </li>
                             <li>
-                                <SideBarChoice title={"Modificar Playlist"} onClick={handlePlaylistModify}/>
+                                <SideBarChoice title={"Modificar Playlist"} onClick={handlePlaylistModify} />
                             </li>
                             <li>
-                                <SideBarChoice title={"Eliminar Playlist"} onClick={handlePlaylistDelete}/>
+                                <SideBarChoice title={"Eliminar Playlist"} onClick={handlePlaylistDelete} />
                             </li>
                         </ul>
                     )}
@@ -95,11 +100,15 @@ function SideBar({onModifyingPlaylist, playlistUpdated, setPlaylistUpdated}) {
             </ul>
             <p className="menu-label">Playlist</p>
             <ul className="menu-list">
-                {userPlaylists.length > 0 ? userPlaylists.map((playlist) => (
-                    <li key={playlist.id}>
-                        <SideBarChoice title={playlist.name} />
-                    </li>
-                )) : <p>No hay playlists disponibles.</p>}
+                {userPlaylists.length > 0 ? (
+                    userPlaylists.map((playlist) => (
+                        <li key={playlist.id}>
+                            <SideBarChoice title={playlist.name} onClick={() => handlePlaylistSongs(playlist.id)} />
+                        </li>
+                    ))
+                ) : (
+                    <p>No hay playlists disponibles.</p>
+                )}
             </ul>
         </aside>
     );
