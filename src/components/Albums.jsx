@@ -1,7 +1,3 @@
-//import "../index.css";
-import Card from "./Card"
-import Songs from "./Songs";
-import Paginacion from "./Paginacion";
 import Tabs from "./Tabs";
 import SideBar from "../components/SideBar";
 import { useState } from "react";

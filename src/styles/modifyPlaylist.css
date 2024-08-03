@@ -18,6 +18,7 @@
     flex-direction: column;
     justify-content: center;
     text-align: center;
+    cursor: pointer;
 }
 
 .modify-playlist-card .card-content {
@@ -35,4 +36,5 @@
     white-space: nowrap; 
     overflow: hidden; 
     text-overflow: ellipsis; 
+    font-size: .85rem;
 }

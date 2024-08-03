@@ -1,0 +1,25 @@
+.playlist-container {
+    background: linear-gradient(135deg, #e98686, #c45050);
+    padding: 20px;
+    border-radius: 10px;
+    margin-left: 0;
+}
+
+.sidebar-column {
+    padding-right: 0;
+}
+
+.remove {
+    background: linear-gradient(135deg, #f13a3a, #641818);
+    color: whitesmoke;
+    padding: 0 20px;
+    border-radius: 2rem;
+    z-index: 1;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.remove:hover {
+    background: red !important;
+}
