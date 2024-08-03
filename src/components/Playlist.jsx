@@ -38,7 +38,7 @@ function Playlist() {
      }, [playlistData]);
 
     const handleAddSong = () => {
-        navigate("/addSong");
+        navigate("/addSong", { state: { playlistID }});
     };
 
     const handleRemoveSong = async (songId) => {

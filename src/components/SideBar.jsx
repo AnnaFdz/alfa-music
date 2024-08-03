@@ -5,7 +5,7 @@ import UserImage from "./UserImage";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-function SideBar({ onModifyingPlaylist, playlistUpdated, setPlaylistUpdated }) {
+function SideBar({playlistUpdated, setPlaylistUpdated }) {
     const { userID, isAuthenticated } = useAuth("state");
     const navigate = useNavigate();
     const [isPlaylistExtended, setIsPlaylistExtended] = useState(false);
