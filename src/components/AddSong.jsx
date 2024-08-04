@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate, useLocation } from "react-router-dom";
+import SelectedSong from "./SelectedSong";
 
 function AddSong() {
     const { token } = useAuth("state");
     const location = useLocation();
     const navigate = useNavigate();
-    const playlistID = location.state?.playlistID;
+    const playlistID = location.state?.playlistID || '';
+    console.log("playlistID: ", playlistID);
     const [title, setTitle] = useState("");
     const [songFile, setSongFile] = useState(null);
     const [artists, setArtists] = useState([]);
@@ -15,8 +17,7 @@ function AddSong() {
     const [selectedAlbum, setSelectedAlbum] = useState("");
     const [isLoadingAlbum, setIsLoadingAlbum] = useState(false);
     const [isErrorAlbum, setIsErrorAlbum] = useState(false);
-    const [isLoadingArtist, setIsLoadingArtist] = useState(false);
-    const [isErrorArtist, setIsErrorArtist] = useState(false);
+    const [selectedSongID, setSelectedSongID] = useState(null);
 
     // Para el combobox de albums
     const fetchAllAlbums = async (url) => {
@@ -41,32 +42,8 @@ function AddSong() {
         }
     };
 
-    // Para el combobox de artists
-    const fetchAllArtists = async (url) => {
-        setIsLoadingArtist(true);
-        setIsErrorArtist(false);
-        try {
-            let allArtists = [];
-            let nextUrl = url;
-
-            while (nextUrl) {
-                const response = await fetch(nextUrl);
-                if (!response.ok) throw new Error('La respuesta del server fue erronea');
-                const data = await response.json();
-                allArtists = [...allArtists, ...data.results];
-                nextUrl = data.next;
-            }
-            setArtists(allArtists);
-        } catch (error) {
-            setIsErrorArtist(true);
-        } finally {
-            setIsLoadingArtist(false);
-        }
-    };
-
     useEffect(() => {
         fetchAllAlbums(`https://sandbox.academiadevelopers.com/harmonyhub/albums/`);
-        fetchAllArtists(`https://sandbox.academiadevelopers.com/harmonyhub/artists/`);
     }, []);
 
     const handleSubmit = async (e) => {
@@ -112,16 +89,42 @@ function AddSong() {
         }
     };
 
+    // Agrego la canción a la playlist mendiante un click de una card.
+    const handleSongSelect = async (songID) => {
+        if (!playlistID) {
+            console.error('No se encontro PlaylistID.');
+            return;
+        }
+        setSelectedSongID(songID);        
+        try {
+            await fetch(`https://sandbox.academiadevelopers.com/harmonyhub/playlist-entries/`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Token ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    order: 1,
+                    playlist: playlistID,
+                    song: songID
+                })
+            });
+            navigate("/customPlaylist", { state: { playlistID }});
+        } catch (error) {
+            console.error('Error al agregar la canción a la playlist:', error);
+        }
+    };
+
     const handleBack = () => {
         navigate('/');
     };
 
-    if (isLoadingAlbum || isLoadingArtist) return <h1>Cargando...</h1>;
+    if (isLoadingAlbum) return <h1>Cargando...</h1>;
     if (isErrorAlbum) return <h1>Error loading albums</h1>;
-    if (isErrorArtist) return <h1>Error loading artists</h1>;
 
     return (
         <form onSubmit={handleSubmit} className="box">
+            <div className="title">Sube una canción nueva</div>
             <div className="field">
                 <label className="label">Título</label>
                 <div className="control">
@@ -161,36 +164,17 @@ function AddSong() {
                 </div>
             </div>
             <div className="field">
-                <label className="label">Artista</label>
-                <div className="control">
-                    <div className="select">
-                        <select
-                            value={selectedArtist}
-                            onChange={(e) => setSelectedArtist(e.target.value)}
-                            required
-                        >
-                            <option value="">Seleccione un artista</option>
-                            {artists.length > 0 ? (
-                                artists.map((artist) => (
-                                    <option key={artist.id} value={artist.id}>
-                                        {artist.name}
-                                    </option>
-                                ))
-                            ) : (
-                                <option value="" disabled>No artists available</option>
-                            )}
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div className="field">
                 <label className="label">Archivo de canción</label>
                 <div className="control">
                     <input
                         className="input"
                         type="file"
                         accept="audio/*"
-                        onChange={(e) => setSongFile(e.target.files[0])}
+                        onChange={(e) =>{ 
+                            const file = e.target.files[0];
+                            console.log("Selected file:", file);
+                            setSongFile(file)
+                        }}
                         required
                     />
                 </div>
@@ -201,6 +185,8 @@ function AddSong() {
                         Agregar Canción
                     </button>
                 </div>
+                <div className="title mt-5">Elige una canción</div>
+                <SelectedSong onSelectSong={handleSongSelect}/>
                 <div className="control m-4">
                     <button type="button" className="button is-primary" onClick={handleBack}>
                         Volver
