@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-
+import "../styles/song.css";
 import Card from "./Card";
 
-export default function Songs() {
+export default function Songs({ onSelectSong }) {
     const [page, setPage] = useState(1);
     const [songs, setSongs] = useState([]);
     const [isError, setIsError] = useState(false);
@@ -53,7 +53,7 @@ export default function Songs() {
                 <h2 className="title">Canciones</h2>
                 <div className="columns">
                     {songs.map((song) => (
-                        <div key={song.id} className="column is-one-quarter ">
+                        <div key={song.id} className="column is-one-quarter" onClick={() => onSelectSong(song.id)}>
                             <Card song={song} />
                         </div>
                     ))}
