@@ -87,7 +87,9 @@ export default function Artists() {
                                             </div>
                                             <div className="card-content">
                                                 <p className="title is-4">{artist.name}</p>
-                                                <p className="subtitle is-6">{artist.bio}</p>
+                                                { (artist.bio ?<p className="subtitle is-6">Biografia:<br /> {artist.bio}</p>
+                                                : null)
+                                                }
                                             </div>
                                         </div>
                                     </div>
