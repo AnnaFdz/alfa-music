@@ -1,3 +1,4 @@
+import imgDefault from "../components/imgs/AT.jpeg";
 export default function Card({ song }) {
     
 
@@ -7,7 +8,7 @@ export default function Card({ song }) {
             <div className="card-image">
             <figure className="image is-4by3">
                 <img
-                src="src\components\imgs\AT.jpeg"
+                src={imgDefault}
                 alt="image cancion"
                 />
             </figure>
