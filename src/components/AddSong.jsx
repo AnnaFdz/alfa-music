@@ -51,10 +51,8 @@ function AddSong() {
         try {
             const formData = new FormData();
             formData.append('title', title);
-            formData.append('artist', selectedArtist);
             formData.append('album', selectedAlbum);
-            formData.append('playlist', playlistID);
-            formData.append('file', songFile);
+            formData.append('song_file', songFile);
 
             const songResponse = await fetch('https://sandbox.academiadevelopers.com/harmonyhub/songs/', {
                 method: 'POST',
@@ -66,6 +64,8 @@ function AddSong() {
 
             if (!songResponse.ok) throw new Error('La respuesta del server fue erronea');
             const songResult = await songResponse.json();
+            console.log("ID song: ", songResult.file)
+            console.log(songResult)
 
             // agrego la canción a la playlist
             const updateResponse = await fetch(`https://sandbox.academiadevelopers.com/harmonyhub/playlist-entries/`, {
@@ -115,7 +115,7 @@ function AddSong() {
     };
 
     const handleBack = () => {
-        navigate('/');
+        navigate('/customPlaylist', { state: { playlistID } });
     };
 
     if (isLoadingAlbum) return <h1>Cargando...</h1>;
