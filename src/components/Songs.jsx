@@ -8,13 +8,19 @@ export default function Songs({ onSelectSong }) {
     const [isError, setIsError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [hasNextPage, setHasNextPage] = useState(false);
+    const [searchTitle, setSearchTitle] = useState({});
    
-    const fetchSongs = async (pageNumber) => {
+    const fetchSongs = async (page) => {
         setIsLoading(true);
         setIsError(false);
+        let query = new URLSearchParams({
+            page: page,
+            page_size: 4,
+            ...searchTitle,
+        }).toString();
         try {
             const response = await fetch(
-                `http://sandbox.academiadevelopers.com/harmonyhub/songs/?page=${pageNumber}&page_size=4`
+                `http://sandbox.academiadevelopers.com/harmonyhub/songs/?${query}`
             );
             if (!response.ok) {
                 throw new Error("No se pudieron cargar las canciones");
@@ -31,7 +37,7 @@ export default function Songs({ onSelectSong }) {
 
     useEffect(() => {
         fetchSongs(page);
-    }, [page]);
+    }, [page, searchTitle]);
 
     const handleNextPage = () => {
         if (hasNextPage) {
@@ -44,16 +50,49 @@ export default function Songs({ onSelectSong }) {
             setPage((prevPage) => prevPage - 1);
         }
     };
+    function handleSearch(event) {
+        event.preventDefault();
+        const searchForm = new FormData(event.target);
+
+        const newSearchTitle = {};
+
+        searchForm.forEach((value, key) => {
+            // key === "title"
+            if (value) {
+                newSearchTitle[key] = value;
+            }
+        });
+
+        setSearchTitle(newSearchTitle);
+        setSongs([]);
+        setPage(1);
+       
+    }
 
     return (
-        <div className="box2">
-            <div className="box2">
+        <div className="box2 ">
+            <div className="box ">
+            <form className="box" onSubmit={handleSearch}>
+                    <div className="field ">
+                        <label className="label">Buscar Por Título:</label>
+                        <div className="control">
+                            <input className="input cardinput has-background-grey-dark has-text-white" type="text" name="title" />
+                        </div>
+                    </div>
+                    
+                    <div className="field">
+                        
+                        <button className="button is-primary" type="submit">
+                            Buscar
+                        </button>
+                    </div>
+                </form>
                               <div className='box box2'>
                               <div className="box2">
                 <h2 className="title">Canciones</h2>
                 <div className="columns">
                     {songs.map((song) => (
-                        <div key={song.id} className="column is-one-quarter" onClick={() => onSelectSong(song.id)}>
+                        <div key={song.id} className=" box2 column is-one-quarter" onClick={() => onSelectSong(song.id)}>
                             <Card song={song} />
                         </div>
                     ))}
