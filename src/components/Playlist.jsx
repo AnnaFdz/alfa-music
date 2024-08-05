@@ -5,7 +5,6 @@ import "../styles/customPlaylist.css";
 import SideBar from "./SideBar";
 import Card from "./Card";
 import { useAuth } from "../contexts/AuthContext";
-import SelectedSong from "./SelectedSong"; // Import the component
 
 function Playlist() {
     const { token } = useAuth("state");
@@ -21,7 +20,7 @@ function Playlist() {
         if (playlistID) {
             doFetchPlaylist();
         }
-    }, []);
+    }, [playlistID]);
 
     useEffect(() => {
         if (playlistData) {
@@ -34,7 +33,6 @@ function Playlist() {
                     const songData = await Promise.all(songPromises);
                     setSongs(songData);
                     
-                    // Fetch playlist entries
                     const entryResponse = await fetch(`https://sandbox.academiadevelopers.com/harmonyhub/playlist-entries/?playlist=${playlistID}`);
                     const entryData = await entryResponse.json();
                     setEntries(entryData.results);
@@ -44,7 +42,7 @@ function Playlist() {
             };
             fetchSongs();
         }
-    }, [playlistData]);
+    }, [playlistData, playlistID]);
 
     const fetchEntryID = async (playlistID, songID) => {
         try {
@@ -63,6 +61,10 @@ function Playlist() {
     const handleAddSong = () => {
         navigate("/addSong", { state: { playlistID }});
     };
+
+    const handleBack = () => {
+        navigate("/");
+    }
 
     const handleRemoveSong = async (songID) => {
         if (!playlistID) {
@@ -94,7 +96,6 @@ function Playlist() {
         }
     };
     
-
     if (playlistLoading) return <h1>Cargando...</h1>;
     if (playlistError) return <h1>Error al traer la playlist</h1>;
     if (!playlistData) return <h1>No hay datos de la playlist disponibles</h1>;
@@ -119,6 +120,7 @@ function Playlist() {
                         <p className="parrafo">No hay canciones disponibles.</p>
                     )}
                 </div>
+                <button className="button is-primary mt-5" onClick={handleBack}>Volver</button>
             </div>
         </div>
     );

@@ -2,14 +2,13 @@ import Songs from "./Songs";
 import Tabs from "./Tabs";
 import SideBar from "../components/SideBar";
 import { useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
 
 
 export default function Home() {
+  const [playlistID, setPlaylistID] = useState(null);
   const [showPlaylistForm, setShowPlaylistForm] = useState(false);
   const [isModifyingPlaylist, setIsModifyingPlaylist] = useState(false);
   const [playlistUpdated, setPlaylistUpdated] = useState(false);
-  const {isAuthenticated} = useAuth("state");
 
   const handlePlaylistCreate = (showForm) => {
     setShowPlaylistForm(showForm);
@@ -18,6 +17,11 @@ export default function Home() {
   const handleModifyPlaylist = () => {
     setIsModifyingPlaylist(true);
   }
+
+  const handlePlaylistSelect = (id) => {
+    setPlaylistID(id);
+  }
+
   return (
     <>
     <div className="containerT">
@@ -27,13 +31,12 @@ export default function Home() {
      
         <div className="columns is-gapless">
                 <div className="column is-narrow">
-                {isAuthenticated? (
                   <SideBar
+                    onPlaylistSelect={handlePlaylistSelect}
                     onPlaylistCreate={handlePlaylistCreate}
                     onModifyingPlaylist={handleModifyPlaylist}
                     setPlaylistUpdated={setPlaylistUpdated}  
                   />
-                  ): null}
                 </div>
                  <div className="column is-full">
                     <div className="containerDos">
