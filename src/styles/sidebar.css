@@ -3,6 +3,8 @@
     background: linear-gradient(135deg, #ffcccc, #ffe6e6);
     color: white;
     text-align: center;
+    height: 100vh;
+    overflow-y: auto;
 }
 .menu > img{
         height: 4rem;

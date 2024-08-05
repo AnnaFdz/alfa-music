@@ -2,16 +2,15 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate, useLocation } from "react-router-dom";
 import SelectedSong from "./SelectedSong";
+import SideBar from "./SideBar";
 
 function AddSong() {
     const { token } = useAuth("state");
     const location = useLocation();
     const navigate = useNavigate();
     const playlistID = location.state?.playlistID || '';
-    console.log("playlistID: ", playlistID);
     const [title, setTitle] = useState("");
     const [songFile, setSongFile] = useState(null);
-    const [artists, setArtists] = useState([]);
     const [albums, setAlbums] = useState([]);
     const [selectedArtist, setSelectedArtist] = useState("");
     const [selectedAlbum, setSelectedAlbum] = useState("");
@@ -52,10 +51,8 @@ function AddSong() {
         try {
             const formData = new FormData();
             formData.append('title', title);
-            formData.append('artist', selectedArtist);
             formData.append('album', selectedAlbum);
-            formData.append('playlist', playlistID);
-            formData.append('file', songFile);
+            formData.append('song_file', songFile);
 
             const songResponse = await fetch('https://sandbox.academiadevelopers.com/harmonyhub/songs/', {
                 method: 'POST',
@@ -67,6 +64,8 @@ function AddSong() {
 
             if (!songResponse.ok) throw new Error('La respuesta del server fue erronea');
             const songResult = await songResponse.json();
+            console.log("ID song: ", songResult.file)
+            console.log(songResult)
 
             // agrego la canción a la playlist
             const updateResponse = await fetch(`https://sandbox.academiadevelopers.com/harmonyhub/playlist-entries/`, {
@@ -116,85 +115,91 @@ function AddSong() {
     };
 
     const handleBack = () => {
-        navigate('/');
+        navigate('/customPlaylist', { state: { playlistID } });
     };
 
     if (isLoadingAlbum) return <h1>Cargando...</h1>;
     if (isErrorAlbum) return <h1>Error loading albums</h1>;
 
     return (
-        <form onSubmit={handleSubmit} className="box">
-            <div className="title">Sube una canción nueva</div>
-            <div className="field">
-                <label className="label">Título</label>
-                <div className="control">
-                    <input
-                        className="input"
-                        type="text"
-                        placeholder="Título de la canción"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        required
-                        maxLength={255}
-                        minLength={1}
-                    />
-                </div>
+        <div className="columns">
+            <div className="column is-narrow">
+                <SideBar/>
             </div>
-            <div className="field">
-                <label className="label">Álbum</label>
-                <div className="control">
-                    <div className="select">
-                        <select
-                            value={selectedAlbum}
-                            onChange={(e) => setSelectedAlbum(e.target.value)}
-                            required
-                        >
-                            <option value="">Seleccione un álbum</option>
-                            {albums.length > 0 ? (
-                                albums.map((album) => (
-                                    <option key={album.id} value={album.id}>
-                                        {album.title}
-                                    </option>
-                                ))
-                            ) : (
-                                <option value="" disabled>No albums available</option>
-                            )}
-                        </select>
+            <div className="column">
+                <form onSubmit={handleSubmit} className="box">
+                    <div className="title">Sube una canción nueva</div>
+                    <div className="field">
+                        <label className="label">Título</label>
+                        <div className="control">
+                            <input
+                                className="input"
+                                type="text"
+                                placeholder="Título de la canción"
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                                required
+                                maxLength={255}
+                                minLength={1}
+                            />
+                        </div>
                     </div>
-                </div>
+                    <div className="field">
+                        <label className="label">Álbum</label>
+                        <div className="control">
+                            <div className="select">
+                                <select
+                                    value={selectedAlbum}
+                                    onChange={(e) => setSelectedAlbum(e.target.value)}
+                                    required
+                                >
+                                    <option value="">Seleccione un álbum</option>
+                                    {albums.length > 0 ? (
+                                        albums.map((album) => (
+                                            <option key={album.id} value={album.id}>
+                                                {album.title}
+                                            </option>
+                                        ))
+                                    ) : (
+                                        <option value="" disabled>No albums available</option>
+                                    )}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="field">
+                        <label className="label">Archivo de canción</label>
+                        <div className="control">
+                            <input
+                                className="input"
+                                type="file"
+                                accept="audio/*"
+                                onChange={(e) =>{ 
+                                    const file = e.target.files[0];
+                                    console.log("Selected file:", file);
+                                    setSongFile(file)
+                                }}
+                                required
+                            />
+                        </div>
+                    </div>
+                    <div className="field">
+                        <div className="control">
+                            <button type="submit" className="button is-primary">
+                                Agregar Canción
+                            </button>
+                        </div>
+                        <div className="title mt-5">Elige una canción</div>
+                        <SelectedSong onSelectSong={handleSongSelect}/>
+                        <div className="control m-4">
+                            <button type="button" className="button is-primary" onClick={handleBack}>
+                                Volver
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div className="field">
-                <label className="label">Archivo de canción</label>
-                <div className="control">
-                    <input
-                        className="input"
-                        type="file"
-                        accept="audio/*"
-                        onChange={(e) =>{ 
-                            const file = e.target.files[0];
-                            console.log("Selected file:", file);
-                            setSongFile(file)
-                        }}
-                        required
-                    />
-                </div>
-            </div>
-            <div className="field">
-                <div className="control">
-                    <button type="submit" className="button is-primary">
-                        Agregar Canción
-                    </button>
-                </div>
-                <div className="title mt-5">Elige una canción</div>
-                <SelectedSong onSelectSong={handleSongSelect}/>
-                <div className="control m-4">
-                    <button type="button" className="button is-primary" onClick={handleBack}>
-                        Volver
-                    </button>
-                </div>
-            </div>
-        </form>
-    );
+        </div>    );
 }
 
 export default AddSong;

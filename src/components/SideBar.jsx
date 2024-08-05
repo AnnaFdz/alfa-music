@@ -5,7 +5,7 @@ import UserImage from "./UserImage";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-function SideBar({playlistUpdated, setPlaylistUpdated }) {
+function SideBar({playlistUpdated, setPlaylistUpdated, onPlaylistSelect}) {
     const { userID, isAuthenticated } = useAuth("state");
     const navigate = useNavigate();
     const [isPlaylistExtended, setIsPlaylistExtended] = useState(false);
@@ -26,6 +26,9 @@ function SideBar({playlistUpdated, setPlaylistUpdated }) {
     };
 
     const handlePlaylistSongs = (playlistID) => {
+        if (onPlaylistSelect) {
+            onPlaylistSelect(playlistID);
+        }
         navigate("/customPlaylist", { state: { playlistID } });
     };
 
@@ -68,9 +71,6 @@ function SideBar({playlistUpdated, setPlaylistUpdated }) {
         setIsPlaylistExtended(!isPlaylistExtended);
     };
 
-    if (!isAuthenticated) {
-        return <h1>No estás autenticado</h1>;
-    }
     if (isLoading) return <h1>Cargando...</h1>;
     if (isError) return <h1>Error al traer las playlists</h1>;
     if (!playlists) return <h1>No hay playlists disponibles</h1>;
