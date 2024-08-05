@@ -23,3 +23,13 @@
 .remove:hover {
     background: red !important;
 }
+
+.parrafo {
+    background-color:#c45050;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    font-size: 18px;
+    margin: 10rem 10rem !important;
+    cursor: default;
+}
