@@ -124,9 +124,12 @@ function AddSong() {
     return (
         <div className="columns">
             <div className="column is-narrow">
-                <SideBar/>
+                <SideBar />
             </div>
             <div className="column">
+                <div className="box">
+                    <SelectedSong onSelectSong={handleSongSelect} />
+                </div>
                 <form onSubmit={handleSubmit} className="box">
                     <div className="title">Sube una canción nueva</div>
                     <div className="field">
@@ -190,7 +193,6 @@ function AddSong() {
                             </button>
                         </div>
                         <div className="title mt-5">Elige una canción</div>
-                        <SelectedSong onSelectSong={handleSongSelect}/>
                         <div className="control m-4">
                             <button type="button" className="button is-primary" onClick={handleBack}>
                                 Volver
@@ -199,7 +201,8 @@ function AddSong() {
                     </div>
                 </form>
             </div>
-        </div>    );
+        </div>
+    );
 }
 
 export default AddSong;
