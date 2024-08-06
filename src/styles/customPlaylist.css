@@ -1,5 +1,18 @@
+:root {
+    --pink-background: linear-gradient(135deg, #ffcccc, #ffe6e6);
+    --blue-background: linear-gradient(135deg, #434e5c, #1a5580);
+    --choice-background: linear-gradient(135deg, #e98686, #c45050);
+}
+
+.playlist-container.pinkBackground {
+    background: var(--pink-background);
+}
+
+.playlist-container.blueBackground {
+    background: var(--blue-background);
+}
+
 .playlist-container {
-    background: linear-gradient(135deg, #e98686, #c45050);
     padding: 20px;
     border-radius: 10px;
     margin-left: 0;

@@ -1,12 +1,38 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import useTheme from "../hooks/useTheme";
 
 export default function Tabs() {
+    const { theme } = useTheme();
+    const location = useLocation();
+    const currentPath = location.pathname;
+
     return (
-        <p className="panel-tabs">
-            <Link to="/" className="is-active">Songs</Link>
-            <Link to="/albums">Albums</Link>
-            <Link to="/artists">Artists</Link>
-            
-        </p>
+        <div className={`${
+            theme === 'pink'
+            ? 'pinkBackground'
+            : 'blueBackground'
+        }`}>
+            <p className="panel-tabs">
+                <Link 
+                    to="/" 
+                    className={currentPath === "/" ? "is-active" : ""}
+                >
+                    Songs
+                </Link>
+                <Link 
+                    to="/albums" 
+                    className={currentPath === "/albums" ? "is-active" : ""}
+                >
+                    Albums
+                </Link>
+                <Link 
+                    to="/artists" 
+                    className={currentPath === "/artists" ? "is-active" : ""}
+                >
+                    Artists
+                </Link>
+            </p>
+        </div>
+        
     );
 }

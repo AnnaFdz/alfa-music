@@ -5,8 +5,10 @@ import "../styles/customPlaylist.css";
 import SideBar from "./SideBar";
 import Card from "./Card";
 import { useAuth } from "../contexts/AuthContext";
+import useTheme from "../hooks/useTheme";
 
 function Playlist() {
+    const { theme } = useTheme();
     const { token } = useAuth("state");
     const location = useLocation();
     const { playlistID } = location.state;
@@ -105,7 +107,11 @@ function Playlist() {
             <div className="column is-narrow sidebar-column">
                 <SideBar />
             </div>
-            <div className="column playlist-container">
+            <div className={`column playlist-container ${
+                theme === 'pink'
+                ? 'pinkBackground'
+                : 'blueBackground'
+            }`}>
                 <button className="button is-link mt-5" onClick={handleAddSong}>Agregar canción</button>
                 <h1 className="title">Canciones de {playlistData.name}</h1>
                 <div className="columns is-multiline">

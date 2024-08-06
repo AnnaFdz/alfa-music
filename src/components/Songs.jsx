@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import "../styles/song.css";
 import Card from "./Card";
+import useTheme from "../hooks/useTheme";
 
 export default function Songs({ onSelectSong }) {
+    const { theme } = useTheme();
     const [page, setPage] = useState(1);
     const [songs, setSongs] = useState([]);
     const [isError, setIsError] = useState(false);
@@ -70,9 +72,21 @@ export default function Songs({ onSelectSong }) {
     }
 
     return (
-        <div className="box2 ">
-            <div className="box ">
-            <form className="box" onSubmit={handleSearch}>
+        <div className={`box2 ${
+            theme === 'pink'
+            ? 'pinkBackground'
+            : 'blueBackground'
+        }`}>
+            <div className={` ${
+                theme === 'pink'
+                ? 'pinkBackground'
+                : 'blueBackground'
+            }`}>
+            <form className={`box ${
+                theme === 'pink'
+                ? 'pinkBackground'
+                : 'blueBackground'
+            }`} onSubmit={handleSearch}>
                     <div className="field ">
                         <label className="label">Buscar Por Título:</label>
                         <div className="control">
@@ -87,7 +101,11 @@ export default function Songs({ onSelectSong }) {
                         </button>
                     </div>
                 </form>
-                              <div className='box box2'>
+                              <div className={`box ${
+                                theme === 'pink'
+                                ? 'pinkBackground'
+                                : 'blueBackground'
+                              }`}>
                               <div className="box2">
                 <h2 className="title">Canciones</h2>
                 <div className="columns">

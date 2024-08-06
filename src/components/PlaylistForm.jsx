@@ -3,8 +3,10 @@ import "../styles/playlistform.css";
 import useFetch from "../hooks/useFetch";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import useTheme from "../hooks/useTheme";
 
 function PlaylistForm() {
+    const { theme } = useTheme();
     const { token } = useAuth("state");
     const [playlistName, setPlaylistName] = useState("");
     const [playlistDescription, setPlaylistDescription] = useState("");
@@ -41,7 +43,11 @@ function PlaylistForm() {
 
     return (
         <>
-            <form onSubmit={handleSubmit} className="box">
+            <form onSubmit={handleSubmit} className={`${
+                theme === 'pink'
+                ? 'pinkBackground'
+                : 'blueBackground'
+            }`}>
                 <div className="field">
                     <label className="label">Nombre de la Playlist</label>
                     <div className="control">
