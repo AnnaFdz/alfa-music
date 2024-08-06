@@ -2,6 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import Logo from '../assets/Logointro.jpeg';
 import { useAuth } from "../contexts/AuthContext";
 import "../App.css";
+import ToggleTheme from "./ToggleTheme";
 
 
 
@@ -58,6 +59,7 @@ export default function Navbar({appName}) {
                 </div>
                 <div className="navbar-end">
                 <div className="navbar-item">
+                    <ToggleTheme/>
                 <div className="button is-danger">
                     
                 {isAuthenticated ? (

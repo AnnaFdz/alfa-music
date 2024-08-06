@@ -2,9 +2,12 @@ import Songs from "./Songs";
 import Tabs from "./Tabs";
 import SideBar from "../components/SideBar";
 import { useState } from "react";
+import useTheme from "../hooks/useTheme";
+import "../styles/sidebar.css";
 
 
 export default function Home() {
+  const { theme } = useTheme();
   const [playlistID, setPlaylistID] = useState(null);
   const [showPlaylistForm, setShowPlaylistForm] = useState(false);
   const [isModifyingPlaylist, setIsModifyingPlaylist] = useState(false);
@@ -24,12 +27,14 @@ export default function Home() {
 
   return (
     <>
-    <div className="containerT">
-         <Tabs/>
-         </div>
-      
-     
-        <div className="columns is-gapless">
+      <div className={`containerT ${
+        theme === 'pink'
+       ? 'pinkBackground'
+        : 'blueBackground'
+      }`}>
+        <Tabs/>
+      </div>
+      <div className="columns is-gapless">
                 <div className="column is-narrow">
                   <SideBar
                     onPlaylistSelect={handlePlaylistSelect}
@@ -38,35 +43,15 @@ export default function Home() {
                     setPlaylistUpdated={setPlaylistUpdated}  
                   />
                 </div>
-                 <div className="column is-full">
-                    <div className="containerDos">
-                        <div className='box box2 has-background-danger-60'>
+                 <div className='main-content'>
+                    <div className='containerDos'>
+                        <div className={` ${
+                          theme === 'pink'
+                          ? 'pinkBackground'
+                          : 'blueBackground'
+                        }`}>
                           <div className="columns">
                           <Songs/>
-                            {/* <div className="column">
-                              <div className='box'>
-                                 <Card/>  
-                                
-                              </div>
-                            </div> */}
-                        {/* --------- */}
-                            {/* <div className="column">
-                              <div className='box'>
-                                <Card/>
-                              </div>
-                            </div>  */}
-                        {/*---------*/}
-                            {/* <div className="column">
-                              <div className='box'>
-                                <Card/>
-                              </div>
-                            </div>  */}
-                        {/*---------*/}
-                            {/* <div className="column">
-                              <div className='box'>
-                                <Card/>
-                              </div>
-                            </div>  */}
           </div>
         </div>
       </div>

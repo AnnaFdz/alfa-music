@@ -3,8 +3,10 @@ import { useAuth } from "../contexts/AuthContext";
 import { useNavigate, useLocation } from "react-router-dom";
 import SelectedSong from "./SelectedSong";
 import SideBar from "./SideBar";
+import useTheme from "../hooks/useTheme";
 
 function AddSong() {
+    const { theme } = useTheme();
     const { token } = useAuth("state");
     const location = useLocation();
     const navigate = useNavigate();
@@ -130,7 +132,11 @@ function AddSong() {
                 <div className="box">
                     <SelectedSong onSelectSong={handleSongSelect} />
                 </div>
-                <form onSubmit={handleSubmit} className="box">
+                <form onSubmit={handleSubmit} className={`box ${
+                    theme === 'pink'
+                    ? 'pinkBackground'
+                    : 'blueBackground'
+                }`}>
                     <div className="title">Sube una canción nueva</div>
                     <div className="field">
                         <label className="label">Título</label>

@@ -2,8 +2,10 @@ import Tabs from "./Tabs";
 import SideBar from "../components/SideBar";
 import { useState, useEffect } from "react";
 import imgDefault from "../components/imgs/AT.jpeg";
+import useTheme from "../hooks/useTheme";
 
-export default function Artists() {
+export default function Albums() {
+    const { theme } = useTheme();
   const [showPlaylistForm, setShowPlaylistForm] = useState(false);
   const [isModifyingPlaylist, setIsModifyingPlaylist] = useState(false);
   const [playlistUpdated, setPlaylistUpdated] = useState(false);
@@ -57,22 +59,32 @@ export default function Artists() {
     };
   return (
     <>
-    <div className="containerT">
-         <Tabs/>
-         </div>
-      
-     
+    <div className={`containerT ${
+        theme === 'pink'
+       ? 'pinkBackground'
+        : 'blueBackground'
+    }`}>
+        <Tabs/>
+    </div>
         <div className="columns">
-                <div className="column-start body is-one-fifth">
+                <div className="column is-narrow">
                      <SideBar
                         onPlaylistCreate={handlePlaylistCreate}
                         onModifyingPlaylist={handleModifyPlaylist}
                         setPlaylistUpdated={setPlaylistUpdated}  
                     /> 
-                      </div>
-                 <div className="column is-10">
+                </div>
+                <div className={`main-content ${
+                    theme === 'pink'
+                    ? 'pinkBackground'
+                    : 'blueBackground'
+                }`}>
                     <div className="containerDos">
-                        <div className='box box2 has-background-danger-60'>
+                        <div className={`box box2 ${
+                            theme === 'pink'
+                            ? 'pinkBackground'
+                            : 'blueBackground'
+                        }`}>
                         <h2 className="title">Álbumes</h2>
                         <div className="columns">
                             {albums.map((album) => (

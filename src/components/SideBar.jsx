@@ -4,8 +4,10 @@ import "../styles/sidebar.css";
 import UserImage from "./UserImage";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import useTheme from "../hooks/useTheme";
 
 function SideBar({playlistUpdated, setPlaylistUpdated, onPlaylistSelect}) {
+    const {theme} = useTheme();
     const { userID, isAuthenticated } = useAuth("state");
     const navigate = useNavigate();
     const [isPlaylistExtended, setIsPlaylistExtended] = useState(false);
@@ -78,7 +80,11 @@ function SideBar({playlistUpdated, setPlaylistUpdated, onPlaylistSelect}) {
     const userPlaylists = playlists.filter((playlist) => playlist.owner == userID);
 
     return (
-        <aside className="menu">
+        <aside className={`menu ${
+            theme === "pink"
+                ? "pinkBackground"
+                : "blueBackground"
+        }`}>
             <UserImage />
             <ul className="menu-list">
                 <li>
