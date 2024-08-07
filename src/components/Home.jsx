@@ -27,15 +27,14 @@ export default function Home() {
 
   return (
     <>
-      <div className={`containerT ${
-        theme === 'pink'
-       ? 'pinkBackground'
-        : 'blueBackground'
-      }`}>
+    <div className='containerT'>
+      
         <Tabs/>
       </div>
-      <div className="columns is-gapless">
-                <div className="column is-narrow">
+      <div className="columns"
+      style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'fit-content'}}
+      >
+                <div className="column is-narrow ">
                   <SideBar
                     onPlaylistSelect={handlePlaylistSelect}
                     onPlaylistCreate={handlePlaylistCreate}
@@ -43,19 +42,19 @@ export default function Home() {
                     setPlaylistUpdated={setPlaylistUpdated}  
                   />
                 </div>
-                 <div className='main-content'>
+                 {/* <div className='main-content'> */}
                     <div className='containerDos'>
                         <div className={` ${
                           theme === 'pink'
                           ? 'pinkBackground'
                           : 'blueBackground'
-                        }`}>
+                          }`}>
                           <div className="columns">
                           <Songs/>
-          </div>
-        </div>
-      </div>
-    </div>
+                          </div>
+                        </div>
+                      </div>
+                  {/* </div> */}
     
     </div>
     </>

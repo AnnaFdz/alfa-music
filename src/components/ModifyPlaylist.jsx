@@ -48,10 +48,10 @@ function ModifyPlaylist() {
             {isLoading ? (
                 <p>Cargando playlists...</p>
             ) : (
-                <div className="columns is-multiline">
+                <div className="columns is-multiline" >
                     {paginatedPlaylists.length > 0 ? (
                         paginatedPlaylists.map((playlist) => (
-                            <div className="column is-one-quarter" key={playlist.id}>
+                            <div className="column is-one-quarter" key={playlist.id} >
                                 <div className="card modify-playlist-card" onClick={() => handleClick(playlist)}>
                                     <div className="card-content">
                                         <p className="title modify-playlist-title">{playlist.name}</p>
