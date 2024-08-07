@@ -11,6 +11,13 @@ export default function Songs({ onSelectSong }) {
     const [isLoading, setIsLoading] = useState(false);
     const [hasNextPage, setHasNextPage] = useState(false);
     const [searchTitle, setSearchTitle] = useState({});
+    const [inputValue, setInputValue] = useState("");
+    const [inputWidth, setInputWidth] = useState(100);
+
+    const handleChange = (e) => {
+        setInputValue(e.target.value);
+        setInputWidth(Math.max(100, e.target.value.length * 10));
+    };
    
     const fetchSongs = async (page) => {
         setIsLoading(true);
@@ -59,7 +66,7 @@ export default function Songs({ onSelectSong }) {
         const newSearchTitle = {};
 
         searchForm.forEach((value, key) => {
-            // key === "title"
+            
             if (value) {
                 newSearchTitle[key] = value;
             }
@@ -70,7 +77,7 @@ export default function Songs({ onSelectSong }) {
         setPage(1);
        
     }
-
+        
     return (
         <div className={`box2 ${
             theme === 'pink'
@@ -82,24 +89,28 @@ export default function Songs({ onSelectSong }) {
                 ? 'pinkBackground'
                 : 'blueBackground'
             }`}>
-            <form className={`box ${
+            <form className={`box search-form ${
                 theme === 'pink'
                 ? 'pinkBackground'
                 : 'blueBackground'
             }`} onSubmit={handleSearch}>
-                    <div className="field ">
+                    <div className="field " >
+                        
                         <label className="label">Buscar Por Título:</label>
+                        
                         <div className="control">
-                            <input className="input cardinput has-background-grey-dark has-text-white" type="text" name="title" />
+                            <input className="input cardinput has-background-grey-dark has-text-white" type="text" name="title"
+                             value={inputValue}
+                             style={{
+                                transition: 'width 0.3s ease',
+                                width: `${inputWidth}px`
+                            }}  onChange={handleChange}/>
                         </div>
                     </div>
-                    
-                    <div className="field">
-                        
                         <button className="button is-primary" type="submit">
-                            Buscar
+                        <i class="fa fa-search" aria-hidden="true"></i>
                         </button>
-                    </div>
+                    
                 </form>
                               <div className={`box ${
                                 theme === 'pink'
