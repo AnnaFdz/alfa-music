@@ -7,7 +7,7 @@ export default function Card({ song }) {
         <div className="column">
             <div className="card">
             <div className="card-image">
-            <figure className="image is-4by3">
+            <figure className="image is-4b3">
                 <img
                 src={imgDefault}
                 alt="image cancion"

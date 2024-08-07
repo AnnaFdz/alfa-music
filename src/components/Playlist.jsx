@@ -103,10 +103,11 @@ function Playlist() {
     if (!playlistData) return <h1>No hay datos de la playlist disponibles</h1>;
 
     return (
-        <div className="columns is-gapless">
+        <div className="columns">
             <div className="column is-narrow sidebar-column">
                 <SideBar />
             </div>
+            <div className="box2">
             <div className={`column playlist-container ${
                 theme === 'pink'
                 ? 'pinkBackground'
@@ -117,8 +118,11 @@ function Playlist() {
                 <div className="columns is-multiline">
                     {songs.length > 0 ? (
                         songs.map((song) => (
-                            <div className="column is-one-quarter" key={song.id}>
-                                <span className="remove" onClick={() => handleRemoveSong(song.id)}>X</span>
+                            <div className="column is-one-quarter" key={song.id} style={{ display:"grid"}}>
+                                <span className="remove" onClick={() => handleRemoveSong(song.id)}
+                                     style={{width:"inherit", margin:"auto"}}
+
+                                    >X</span>
                                 <Card song={song}/>
                             </div>
                         ))
@@ -127,6 +131,7 @@ function Playlist() {
                     )}
                 </div>
                 <button className="button is-primary mt-5" onClick={handleBack}>Volver</button>
+            </div>
             </div>
         </div>
     );

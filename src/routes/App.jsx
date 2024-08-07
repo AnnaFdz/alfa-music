@@ -13,6 +13,7 @@ import DeletePlaylist from "../components/DeletePlaylist";
 import ConfirmDelete from "../components/ConfirmDelete";
 import Playlist from "../components/Playlist";
 import AddSong from "../components/AddSong";
+import ProfileInfo from "../components/ProfileInfo";
 
 const App = createBrowserRouter([
     {
@@ -98,7 +99,15 @@ const App = createBrowserRouter([
             {
                 path: "*",
                 element: <h1>Not Found</h1>,
-            }
+            },
+            {
+                path: "profile",
+                element: (
+                    <ProtectedRoute>
+                        <ProfileInfo />
+                    </ProtectedRoute>
+                ),
+            },
         ],
     },
 ]);

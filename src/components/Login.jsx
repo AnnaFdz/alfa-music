@@ -44,8 +44,8 @@ function Login() {
                             return response.json();
                         })
                         .then((profileData) => {
-                            console.log(`User ${profileData.username}`);
-                            login(token, profileData.user__id);
+                            console.log(`User ${profileData.first_name}`);
+                            login(token, profileData.user__id, profileData.first_name);
                         });
                 })
                 .catch((error) => {

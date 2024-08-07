@@ -18,6 +18,7 @@ function reducer(state, action) {
                 ...state,
                 token: action.payload.token,
                 userID: action.payload.userID,
+                firstName: action.payload.firstName,
                 isAuthenticated: true,
             };
         case ACTIONS.LOGOUT:
@@ -25,6 +26,7 @@ function reducer(state, action) {
                 isAuthenticated: false,
                 token: null,
                 userID: null,
+                firstName: null,
             };
         default:
             return state;
@@ -36,6 +38,7 @@ function AuthProvider({ children }) {
         token: localStorage.getItem("authToken"),
         isAuthenticated: localStorage.getItem("authToken") ? true : false,        
         userID: localStorage.getItem("authID"),
+        firstName: localStorage.getItem("firstName"),
     });
 
 
@@ -43,10 +46,11 @@ function AuthProvider({ children }) {
     const location = useLocation();
 
     const actions = {
-        login: (token, userID) => {
-            dispatch({ type: ACTIONS.LOGIN, payload: { token, userID }});
+        login: (token, userID, firstName) => {
+            dispatch({ type: ACTIONS.LOGIN, payload: { token, userID, firstName }});
             localStorage.setItem("authToken", token);
             localStorage.setItem("authID", userID);
+            localStorage.setItem("firstName", firstName);
             const origin = location.state?.from?.pathname || "/";
             navigate(origin);
         },
@@ -54,6 +58,7 @@ function AuthProvider({ children }) {
             dispatch({ type: ACTIONS.LOGOUT });
             localStorage.removeItem("authToken");
             localStorage.removeItem("authID");
+            localStorage.removeItem("firstName");
             navigate("/");
         },
     };

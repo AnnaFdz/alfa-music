@@ -15,7 +15,7 @@ export default function Layout() {
                         <Navbar appName={"AlfA Music"} />
                     </div>
                     <div>
-                        <div className="containerDos" >
+                        <div className="my-element">
                             <Outlet />
                         </div>
                     </div>
