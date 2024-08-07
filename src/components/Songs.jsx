@@ -79,21 +79,15 @@ export default function Songs({ onSelectSong }) {
     }
         
     return (
-        <div className={`box2 ${
-            theme === 'pink'
-            ? 'pinkBackground'
-            : 'blueBackground'
-        }`}>
+        <div className= "box2" >
             <div className={` ${
                 theme === 'pink'
                 ? 'pinkBackground'
                 : 'blueBackground'
             }`}>
-            <form className={`box search-form ${
-                theme === 'pink'
-                ? 'pinkBackground'
-                : 'blueBackground'
-            }`} onSubmit={handleSearch}>
+            <form className= "box has-background-danger-70 search-form "
+           
+             onSubmit={handleSearch}>
                     <div className="field " >
                         
                         <label className="label">Buscar Por Título:</label>
@@ -108,7 +102,7 @@ export default function Songs({ onSelectSong }) {
                         </div>
                     </div>
                         <button className="button is-primary" type="submit">
-                        <i class="fa fa-search" aria-hidden="true"></i>
+                        <i className="fa fa-search" aria-hidden="true"></i>
                         </button>
                     
                 </form>
@@ -119,7 +113,7 @@ export default function Songs({ onSelectSong }) {
                               }`}>
                               <div className="box2">
                 <h2 className="title">Canciones</h2>
-                <div className="columns">
+                <div className="columns" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'fit-content'}}>
                     {songs.map((song) => (
                         <div key={song.id} className=" box2 column is-one-quarter" onClick={() => onSelectSong(song.id)}>
                             <Card song={song} />

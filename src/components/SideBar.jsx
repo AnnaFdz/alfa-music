@@ -1,10 +1,10 @@
 import SideBarChoice from "./SideBarChoice";
 import { useEffect, useState } from "react";
-import "../styles/sidebar.css";
-import UserImage from "./UserImage";
+import "../styles/sidebar.css"
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import useTheme from "../hooks/useTheme";
+import Profile from "./Profile";
 
 function SideBar({playlistUpdated, setPlaylistUpdated, onPlaylistSelect}) {
     const {theme} = useTheme();
@@ -85,7 +85,7 @@ function SideBar({playlistUpdated, setPlaylistUpdated, onPlaylistSelect}) {
                 ? "pinkBackground"
                 : "blueBackground"
         }`}>
-            <UserImage />
+           <Profile/>
             <ul className="menu-list">
                 <li>
                     <SideBarChoice title={"Playlists"} onClick={handlePlaylistToggle} />

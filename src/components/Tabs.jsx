@@ -7,11 +7,13 @@ export default function Tabs() {
     const currentPath = location.pathname;
 
     return (
-        <div className={`${
-            theme === 'pink'
-            ? 'pinkBackground'
-            : 'blueBackground'
-        }`}>
+        <div 
+        // className={`${
+        //     theme === 'pink'
+        //     ? 'pinkBackground'
+        //     : 'blueBackground'
+        // }`}
+        >
             <p className="panel-tabs">
                 <Link 
                     to="/" 

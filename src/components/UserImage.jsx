@@ -22,7 +22,6 @@ function UserImage() {
             if (data.image) {
                 setImgURL('https://sandbox.academiadevelopers.com/'+data.image);
             } else {
-                console.warn('No se encontró una imagen en la respuesta.');
                 setImgURL(defaultImage);
             }
         }).catch((e) => {
@@ -31,7 +30,7 @@ function UserImage() {
     }, [token, userID]);
 
     return (
-        <div className="profileImg"> 
+        <div className="profileImg" style={{ height: "160px", width: "160px", padding: "1%" }}> 
             <img src={imgURL} alt="User Image" />
         </div>
     );
