@@ -55,15 +55,26 @@ const App = createBrowserRouter([
             },
             {
                 path: "/modPlaylist",
-                element: <ModifyPlaylist />,
+                element: 
+                <ProtectedRoute>
+                    <ModifyPlaylist />,
+                </ProtectedRoute>
+
             },
             {
                 path: "/modForm",
-                element: <ModifyForm />,
+                element:
+                <ProtectedRoute>
+                    <ModifyForm />,
+                </ProtectedRoute>
             },
             {
                 path: "/delPlaylist",
-                element: <DeletePlaylist />,
+                element:
+                <ProtectedRoute>
+                    <DeletePlaylist />,
+                </ProtectedRoute>
+                 
             },
             {
                 path: "confirmDelete",
@@ -71,11 +82,18 @@ const App = createBrowserRouter([
             },
             {
                 path: "/customPlaylist",
-                element: <Playlist />,
+                element: 
+                <ProtectedRoute>
+                    <Playlist />,
+                </ProtectedRoute>
+                
             },
             {
                 path: "/addSong",
-                element: <AddSong />,
+                element: 
+                <ProtectedRoute>
+                    <AddSong />,
+                </ProtectedRoute>
             },
             {
                 path: "*",
