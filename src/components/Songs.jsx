@@ -29,7 +29,7 @@ export default function Songs({ onSelectSong }) {
         }).toString();
         try {
             const response = await fetch(
-                `http://sandbox.academiadevelopers.com/harmonyhub/songs/?${query}`
+                `https://sandbox.academiadevelopers.com/harmonyhub/songs/?${query}`
             );
             if (!response.ok) {
                 throw new Error("No se pudieron cargar las canciones");
