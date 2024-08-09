@@ -79,6 +79,12 @@ function DeletePlaylist() {
                     Siguiente
                 </button>
             </div>
+            <div className="control m-4">
+                        <button type="button" className="button is-primary" onClick={() => 
+                                { navigate("/")}}>
+                            Volver
+                        </button>
+            </div>
         </div>
     );
 }

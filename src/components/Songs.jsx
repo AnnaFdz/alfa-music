@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "../styles/song.css";
 import Card from "./Card";
 import useTheme from "../hooks/useTheme";
+import '../index.css';
 
 export default function Songs({ onSelectSong }) {
     const { theme } = useTheme();
@@ -28,13 +29,15 @@ export default function Songs({ onSelectSong }) {
             ...searchTitle,
         }).toString();
         try {
-            const response = await fetch(
-                `https://sandbox.academiadevelopers.com/harmonyhub/songs/?${query}`
-            );
+            let url = `https://sandbox.academiadevelopers.com/harmonyhub/songs/?${query}`
+            const response = await fetch(url);
             if (!response.ok) {
                 throw new Error("No se pudieron cargar las canciones");
             }
             const data = await response.json();
+            if (data.next && data.next.startsWith('http://')) {
+                data.next = data.next.replace('http://', 'https://');
+            }
             setSongs(data.results || []);
             setHasNextPage(!!data.next);
         } catch (error) {
@@ -75,12 +78,12 @@ export default function Songs({ onSelectSong }) {
         setSearchTitle(newSearchTitle);
         setSongs([]);
         setPage(1);
-       
+        setInputValue("");
     }
         
     return (
-        <div className= "box2" >
-            <div className={` ${
+        <div className= "box2 " >
+            <div className={`box ${
                 theme === 'pink'
                 ? 'pinkBackground'
                 : 'blueBackground'
@@ -92,13 +95,12 @@ export default function Songs({ onSelectSong }) {
                         
                         <label className="label">Buscar Por Título:</label>
                         
-                        <div className="control">
+                        <div className="control ">
                             <input className="input cardinput has-background-grey-dark has-text-white" type="text" name="title"
                              value={inputValue}
-                             style={{
-                                transition: 'width 0.3s ease',
-                                width: `${inputWidth}px`
-                            }}  onChange={handleChange}/>
+                             placeholder="Search..."
+                             style={{transition: 'width 0.3s ease',width: `${inputWidth}px` }}
+                             onChange={handleChange}/>
                         </div>
                     </div>
                         <button className="button is-primary" type="submit">
@@ -106,25 +108,27 @@ export default function Songs({ onSelectSong }) {
                         </button>
                     
                 </form>
-                              <div className={`box ${
+                            <div className={`box ${
                                 theme === 'pink'
                                 ? 'pinkBackground'
                                 : 'blueBackground'
                               }`}>
-                              <div className="box2">
-                <h2 className="title">Canciones</h2>
-                <div className="columns" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'fit-content'}}>
-                    {songs.map((song) => (
-                        <div key={song.id} className=" box2 column is-one-quarter" onClick={() => onSelectSong(song.id)}>
-                            <Card song={song} />
-                        </div>
-                    ))}
-                </div>
-                                
+                              <div className="box2" style={{backgroundColor: '#e98686', borderRadius: '0.75rem'}}>
+                                <h2 className="title">Canciones</h2>
+                                <div className="columns" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'fit-content'}}>
+                                    {songs.map((song) => (
+                                    <div key={song.id} className=" box2 column is-one-quarter" onClick={() => onSelectSong(song.id)}>
+                                        <Card song={song} />
+                                    </div>
+                                ))}
+                                </div>
+                                {isLoading && <p>Cargando más canciones...</p>}
+                              {isError && <p>Error al cargar canciones...</p>}
                               </div>
+                              
                             </div>
             
-                {isLoading && <p>Cargando más canciones...</p>}
+                
                 <div className="buttons ">
                 <button
                     className="button is-link "

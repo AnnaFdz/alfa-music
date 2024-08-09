@@ -19,7 +19,7 @@ export default function Navbar({appName}) {
                     
                      
                 <div className="navbar-start">
-                <figure className="image is-128x128-center">
+                <figure className="image ">
               <img
                 className="is-rounded" 
                 src={Logo}
@@ -27,7 +27,7 @@ export default function Navbar({appName}) {
                 style={{ height: "100px", width: "100px" }}
               />
             </figure>
-                <p className="navbar-item">{appName}</p>
+                <p className="navbar-item has-text-weight-bold">{appName} </p>
                     <NavLink
                         to="/"
                         className={({ isActive, isPending, isTransitioning }) =>
@@ -42,9 +42,7 @@ export default function Navbar({appName}) {
                     </NavLink>
                     <NavLink
                         to="/about"
-                        // style={({ isActive }) =>
-                        //     isActive ? { color: "red" } : {}
-                        // }
+                        
                         className={({ isActive, isPending, isTransitioning }) =>
                             [
                                 isPending ? "pending" : "",
@@ -73,9 +71,7 @@ export default function Navbar({appName}) {
                 ):(
                     <NavLink
                         to="/login"
-                        style={({ isActive }) =>
-                            isActive ? { color: "red" } : {}
-                        }
+                        
                         className={({ isActive, isPending, isTransitioning }) =>
                             [
                                 isPending ? "pending" : "",

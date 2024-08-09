@@ -3,19 +3,23 @@ import { useAuth } from "../contexts/AuthContext";
 import useFetchProfile from "../hooks/useFetchProfile";
 import ProfileImageModal from "./ProfileImageModal";
 import defaultImage from "./imgs/userIMGDefault.png";
+import "../styles/sidebar.css";
+import { NavLink, useNavigate } from "react-router-dom";
+import useTheme from "../hooks/useTheme";
 
 export default function ProfileInfo() {
     const { token} = useAuth("state");
     const [editMode, setEditMode] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isEditingState, setIsEditingState] = useState(false);
+    const { theme } = useTheme();
 
     const firstNameRef = useRef(null);
     const lastNameRef = useRef(null);
     const emailRef = useRef(null);
     const dobRef = useRef(null);
     const bioRef = useRef(null);
-    const userStateRef = useRef(null);
+    const navigate = useNavigate();
     
 
     const {
@@ -62,23 +66,26 @@ export default function ProfileInfo() {
 
     function handleSubmit(event) {
         event.preventDefault();
-        updateProfile(
-            `https://sandbox.academiadevelopers.com/users/profiles/${userData.user__id}/`,
-            {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Token ${token}`,
-                },
-                body: JSON.stringify({
-                    first_name: firstNameRef.current.value,
-                    last_name: lastNameRef.current.value,
-                    email: emailRef.current.value,
-                    dob: dobRef.current.value,
-                    bio: bioRef.current.value,
-                }),
-            }
-        );
+        if (editMode && firstNameRef.current) {
+            localStorage.setItem("firstName", firstNameRef.current.value);
+            updateProfile(
+                `https://sandbox.academiadevelopers.com/users/profiles/${userData.user__id}/`,
+                {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Token ${token}`,
+                    },
+                    body: JSON.stringify({
+                        first_name: firstNameRef.current.value,
+                        last_name: lastNameRef.current.value,
+                        email: emailRef.current.value,
+                        dob: dobRef.current.value,
+                        bio: bioRef.current.value,
+                    }),
+                }
+            );
+        }
     }
     
 
@@ -87,21 +94,27 @@ export default function ProfileInfo() {
     if (isErrorProfile) return <p>Error: {isErrorProfile}</p>;
 
     return (
-        <div className="box box3 has-background-danger-70" >
-        <div className="card"
+        <div className={`box box3  ${
+            theme === 'pink'
+            ? 'pinkBackground'
+            : 'blueBackground'
+        }`} >
+        <div className='card' 
+            
         style={{
             display: "flex",
             gap: "0.5rem",
             alignItems: "center",
             marginBottom: "0.5rem",
             flexDirection: "column",
+            backgroundColor: '#e98686'
         }}>
         {userData ? (
             <>
                 <form className="card-content" onSubmit={handleSubmit}>
                     <div className="media">
-                        <div className="profileImg" style={{ height: "160px", width: "160px", padding: "1%" }}>
-                            <figure >
+                        <div className="profileImg" style={{ height: "160px", width: "160px", padding: "1%"  }}>
+                            <figure style={{ width: 'inherit', height: 'inherit' }}>
                                 <img
                                     src={
                                         userData.image
@@ -109,7 +122,7 @@ export default function ProfileInfo() {
                                             : defaultImage
                                     }
                                     alt="Profile image"
-                                    style={{ borderRadius: "50%" }}
+                                    style={{ borderRadius: '50%', width: 'inherit', height: 'inherit' }}
                                     onClick={() => setIsModalOpen(true)}
                                 />
                             </figure>
@@ -159,7 +172,7 @@ export default function ProfileInfo() {
 
                     <div className="content">
                         <div className="field">
-                            <label className="label">Email:</label>
+                            <label className="label" >Email:</label>
                             <div className="control">
                                 <input
                                     type="email"
@@ -212,12 +225,27 @@ export default function ProfileInfo() {
                                     {loadingUpdate
                                         ? "Enviando..."
                                         : "Enviar"}
-                                    {errorUpdating
+                                    {/* {errorUpdating
                                         ? "Ocurrió un error al enviar el formulario"
-                                        : null}
+                                        : null} */}
                                 </button>
                             </div>
-                        ) : null}
+                        ) :
+                        <button
+                            className="button is-primary is-fullwidth"
+                            onClick={() => 
+                                { navigate("/");  window.location.reload(); }}>
+                            Volver
+                        </button> 
+                        // <button className="button is-primary is-fullwidth">
+                        //     <NavLink className="button is-primary"
+                        //         to="/">
+                        //         Volver
+                        //     </NavLink>
+                        // </button>
+                        }
+                      
+                         
                     </div>
                 </form>
                 <ProfileImageModal
