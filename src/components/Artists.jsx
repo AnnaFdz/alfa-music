@@ -40,23 +40,9 @@ export default function Artists() {
     } finally {
         setIsLoading(false);
     }
-  };
+    return url;
+}
 
-  useEffect(() => {
-      fetchArtists(page);
-  }, [page]);
-
-  const handleNextPage = () => {
-      if (hasNextPage) {
-          setPage((prevPage) => prevPage + 1);
-      }
-  };
-
-  const handlePrevPage = () => {
-      if (page > 1) {
-          setPage((prevPage) => prevPage - 1);
-      }
-  };
   return (
     <>
             <div className='containerT'>
@@ -103,9 +89,11 @@ export default function Artists() {
                                             </div>
                                             <div className="card-content">
                                                 <p className="title is-4">{artist.name}</p>
-                                                { (artist.bio ?<p className="subtitle is-6">Biografia:<br /> {artist.bio}</p>
-                                                : null)
-                                                }
+                                                {artist.bio ? (
+                                                    <p className="subtitle is-6">
+                                                        Biografia:<br /> {artist.bio}
+                                                    </p>
+                                                ) : null}
                                             </div>
                                         </div>
                                     </div>
@@ -136,6 +124,5 @@ export default function Artists() {
                 {/* </div> */}
             </div>
         </>
-    
-  );
+    );
 }
