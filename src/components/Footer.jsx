@@ -21,9 +21,11 @@ function Footer({ appName }) {
           <i className="fab fa-facebook"></i> 
         
         </a>
-        <p
-                               >
-                    &copy; 2024 {appName}. Todos los derechos reservados.
+        <div className="has-text-centered">
+        <a href="#"className="has-text-weight-bold ">{appName} </a>
+        </div>
+        <p >
+                    &copy; 2024. Todos los derechos reservados.
                 </p>
         </div>
       </footer>

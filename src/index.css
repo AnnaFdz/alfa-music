@@ -89,15 +89,19 @@ audio::-webkit-media-controls-panel, video::-webkit-media-controls-panel {
     width: fit-content;
    
   }
+  .columns {
+    min-width:1000px;
+    width: fit-content;
+  }
 }
 .columns {
-  min-width:1000px;
+  min-width:900px;
   
   width: fit-content;
 }
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 1550px) {
   .columns {
-    min-width: 1588px;
+    min-width: 1450px;
     width: fit-content;
    
   }
@@ -124,6 +128,26 @@ audio{
    max-height: 780px;
    display: table;
  }
+}
+@media print, screen and (min-width: 769px) {
+  .column.is-one-quarter, .column.is-one-quarter-tablet {
+      flex: none;
+      width: 25%;
+      min-width: 24%;
+      padding: .50rem;
+  }
+  
+}
+.navbar{
+  
+  --bulma-navbar-item-hover-background-l-delta:  #1a5580;
+
+ 
+}
+.navbar :hover{
+  color: #e98686;
+  
+  
 }
 
 

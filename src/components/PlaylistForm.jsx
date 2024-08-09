@@ -43,11 +43,20 @@ function PlaylistForm() {
 
     return (
         <>
-            <form onSubmit={handleSubmit} className={`${
+        <div className={`box box3  ${
                 theme === 'pink'
                 ? 'pinkBackground'
                 : 'blueBackground'
-            }`}>
+            }`} >
+            <form onSubmit={handleSubmit} className='card' 
+            style={{
+                display: "flex",
+                gap: "0.5rem",
+                alignItems: "strech",
+                marginBottom: "0.5rem",
+                flexDirection: "column",
+                backgroundColor: '#e98686'
+            }}>
                 <div className="field">
                     <label className="label">Nombre de la Playlist</label>
                     <div className="control">
@@ -89,6 +98,7 @@ function PlaylistForm() {
             </form>
             {/* {isLoading && <h1>Cargando...</h1>} */}
             {errorMessage && <h1>{errorMessage}</h1>}
+            </div>
         </>
     );
 }
