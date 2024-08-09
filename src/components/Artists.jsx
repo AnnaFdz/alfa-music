@@ -40,8 +40,23 @@ export default function Artists() {
     } finally {
         setIsLoading(false);
     }
-    return url;
-}
+  };
+
+  useEffect(() => {
+      fetchArtists(page);
+  }, [page]);
+
+  const handleNextPage = () => {
+      if (hasNextPage) {
+          setPage((prevPage) => prevPage + 1);
+      }
+  };
+
+  const handlePrevPage = () => {
+      if (page > 1) {
+          setPage((prevPage) => prevPage - 1);
+      }
+  };
 
   return (
     <>
