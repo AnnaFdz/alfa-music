@@ -3,12 +3,14 @@ import { useAuth } from "../contexts/AuthContext";
 import { NavLink } from "react-router-dom";
 
 export default function Profile() {
-    const { firstName } = useAuth("state");
+    const { isAuthenticated, firstName } = useAuth("state");
+
+    if (!isAuthenticated) return null;
     
     return (
         <>
            <UserImage />
-           <p className="subtitle is-4 pb-2">{firstName}
+           <p className="subtitle is-4 pb-2 has-text-primary">{firstName}
             
              </p>
            <NavLink
@@ -20,7 +22,7 @@ export default function Profile() {
                                 isPending ? "pending" : "",
                                 isActive ? "has-text-primary" : "",
                                 isTransitioning ? "transitioning" : "",
-                            ].join("subtitle is-6")
+                            ].join("subtitle is-6 has-text-primary")
                         }
                         >Mi Perfil <i className="fa fa-address-card" aria-hidden="true"></i>
                     </NavLink>
