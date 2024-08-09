@@ -26,13 +26,17 @@ export default function Albums() {
     setIsLoading(true);
     setIsError(false);
     try {
-        const response = await fetch(
-            `https://sandbox.academiadevelopers.com/harmonyhub/albums/?page=${pageNumber}&page_size=4`
-        );
+        let url = `https://sandbox.academiadevelopers.com/harmonyhub/albums/?page=${pageNumber}&page_size=4`
+        const response = await fetch(url);
+
         if (!response.ok) {
             throw new Error("No se pudieron cargar los álbumes");
         }
+
         const data = await response.json();
+        if (data.next && data.next.startsWith('http://')) {
+            data.next = data.next.replace('http://', 'https://');
+        }
         setAlbums(data.results || []);
         setHasNextPage(!!data.next);
     } catch (error) {

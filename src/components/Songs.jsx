@@ -29,13 +29,15 @@ export default function Songs({ onSelectSong }) {
             ...searchTitle,
         }).toString();
         try {
-            const response = await fetch(
-                `https://sandbox.academiadevelopers.com/harmonyhub/songs/?${query}`
-            );
+            let url = `https://sandbox.academiadevelopers.com/harmonyhub/songs/?${query}`
+            const response = await fetch(url);
             if (!response.ok) {
                 throw new Error("No se pudieron cargar las canciones");
             }
             const data = await response.json();
+            if (data.next && data.next.startsWith('http://')) {
+                data.next = data.next.replace('http://', 'https://');
+            }
             setSongs(data.results || []);
             setHasNextPage(!!data.next);
         } catch (error) {
