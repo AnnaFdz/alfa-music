@@ -27,7 +27,7 @@ export default function Albums() {
     setIsError(false);
     try {
         const response = await fetch(
-            `http://sandbox.academiadevelopers.com/harmonyhub/albums/?page=${pageNumber}&page_size=4`
+            `https://sandbox.academiadevelopers.com/harmonyhub/albums/?page=${pageNumber}&page_size=4`
         );
         if (!response.ok) {
             throw new Error("No se pudieron cargar los álbumes");
@@ -59,11 +59,7 @@ export default function Albums() {
     };
   return (
     <>
-    <div className={`containerT ${
-        theme === 'pink'
-       ? 'pinkBackground'
-        : 'blueBackground'
-    }`}>
+    <div className='containerT'>
         <Tabs/>
     </div>
         <div className="columns">
@@ -78,15 +74,16 @@ export default function Albums() {
                     theme === 'pink'
                     ? 'pinkBackground'
                     : 'blueBackground'
-                }`}>
-                    <div className="containerDos">
-                        <div className={`box box2 ${
-                            theme === 'pink'
-                            ? 'pinkBackground'
-                            : 'blueBackground'
-                        }`}>
+                }`} style={{borderRadius: '0.75rem'}}>
+                    <div className={`box
+                    ${
+                        theme === 'pink'
+                        ? 'pinkBackground'
+                        : 'blueBackground'
+                    }`}>
+                        <div className= 'box' style={{backgroundColor: '#e98686', borderRadius: '0.75rem'}} >
                         <h2 className="title">Álbumes</h2>
-                        <div className="columns">
+                        <div className="columns" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'fit-content'}}>
                             {albums.map((album) => (
                                   <div key={album.id} className="column is-one-quarter">
                                       <div className="card">
@@ -109,7 +106,9 @@ export default function Albums() {
                           {isLoading && <p>Cargando más álbumes...</p>}
                           {isError && <p>Error al cargar los álbumes.</p>}
                           
-                          <div className="buttons">
+                          
+                      </div>
+                      <div className="buttons">
                               <button
                                   className="button is-link"
                                   onClick={handlePrevPage}
@@ -125,7 +124,6 @@ export default function Albums() {
                                   Next
                               </button>
                           </div>
-                      </div>
                         </div>
                       </div>
                     </div>    

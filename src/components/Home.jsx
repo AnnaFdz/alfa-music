@@ -42,8 +42,8 @@ export default function Home() {
                     setPlaylistUpdated={setPlaylistUpdated}  
                   />
                 </div>
-                 {/* <div className='main-content'> */}
-                    <div className='containerDos'>
+                 <div className='main-content'>
+                    <div className='column'>
                         <div className={` ${
                           theme === 'pink'
                           ? 'pinkBackground'
@@ -54,7 +54,7 @@ export default function Home() {
                           </div>
                         </div>
                       </div>
-                  {/* </div> */}
+                  </div>
     
     </div>
     </>

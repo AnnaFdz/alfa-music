@@ -27,7 +27,7 @@ export default function Artists() {
     setIsError(false);
     try {
         const response = await fetch(
-            `http://sandbox.academiadevelopers.com/harmonyhub/artists/?page=${pageNumber}&page_size=4`
+            `https://sandbox.academiadevelopers.com/harmonyhub/artists/?page=${pageNumber}&page_size=4`
         );
         if (!response.ok) {
             throw new Error("No se pudieron cargar los artistas");
@@ -59,11 +59,7 @@ export default function Artists() {
   };
   return (
     <>
-            <div className={`containerT ${
-                theme === 'pink'
-                   ? 'pinkBackground'
-                    : 'blueBackground'
-            }`}>
+            <div className='containerT'>
                 <Tabs />
             </div>
 
@@ -75,22 +71,28 @@ export default function Artists() {
                         setPlaylistUpdated={setPlaylistUpdated}
                     />
                 </div>
-                <div className={`column is-10 ${
+                {/* <div className={`column ${
                     theme === 'pink'
                     ? 'pinkBackground'
                     : 'blueBackground'
-                }`}>
-                    <div className="containerDos">
-                        <div className={`box box2 ${
-                            theme === 'pink'
-                            ? 'pinkBackground'
-                            : 'blueBackground'
-                        }`}>
+                }`}  style={{borderRadius: '0.75rem', minWidth: '1099px'}}> */}
+                    <div className={`main-content ${
+                    theme === 'pink'
+                    ? 'pinkBackground'
+                    : 'blueBackground'
+                }`} style={{borderRadius: '0.75rem'}}>
+                    <div className={`box
+                    ${
+                        theme === 'pink'
+                        ? 'pinkBackground'
+                        : 'blueBackground'
+                    }`}>
+                            <div className="box" style={{backgroundColor: '#e98686', borderRadius: '0.75rem'}}>
                             <h2 className="title">Artistas</h2>
                             <div className="columns">
                                 {artists.map((artist) => (
                                     <div key={artist.id} className="column is-one-quarter">
-                                        <div className="card">
+                                        <div className="card" style={{padding: '1rem'}}>
                                             <div className="card-image">
                                                 <figure className="image is-4by3">
                                                     <img
@@ -111,8 +113,10 @@ export default function Artists() {
                             </div>
                             {isLoading && <p>Cargando más artistas...</p>}
                             {isError && <p>Error al cargar los artistas.</p>}
-
-                            <div className="buttons">
+                            </div>
+                            
+                        </div>
+                        <div className="buttons">
                                 <button
                                     className="button is-link"
                                     onClick={handlePrevPage}
@@ -128,9 +132,8 @@ export default function Artists() {
                                     Next
                                 </button>
                             </div>
-                        </div>
                     </div>
-                </div>
+                {/* </div> */}
             </div>
         </>
     

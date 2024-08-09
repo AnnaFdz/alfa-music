@@ -1,8 +1,10 @@
 import { useAuth } from "../contexts/AuthContext";
 import { useEffect } from "react";
+import useTheme from "../hooks/useTheme";
 
 function ProfileImageModal({ isOpen, onClose, userId, onUpload }) {
     const { token } = useAuth("state");
+    const { theme } = useTheme();
 
     const handleImageUpload = (event) => {
         event.preventDefault();
@@ -10,7 +12,7 @@ function ProfileImageModal({ isOpen, onClose, userId, onUpload }) {
         formData.append("image", event.target.image.files[0]);
 
         onUpload.updateProfileImage(
-            `${import.meta.env.VITE_API_BASE_URL}users/profiles/${userId}/`,
+            `https://sandbox.academiadevelopers.com/users/profiles/${userId}/`,
             {
                 method: "PATCH",
                 headers: {
@@ -33,15 +35,21 @@ function ProfileImageModal({ isOpen, onClose, userId, onUpload }) {
         <div className={`modal ${isOpen ? "is-active" : ""}`}>
             <div className="modal-background" onClick={onClose}></div>
             <div className="modal-card">
-                <header className="modal-card-head">
-                    <p className="modal-card-title">Subir Imagen de Perfil</p>
+                <header className="modal-card-head has-background-danger-70">
+                    <p className="modal-card-title ">Subir Imagen de Perfil</p>
                     <button
                         className="delete"
                         aria-label="close"
                         onClick={onClose}
                     ></button>
                 </header>
-                <section className="modal-card-body">
+                <section className=
+                {`modal-card-body ${
+                    theme === 'pink'
+                    ? 'pinkBackground'
+                    : 'blueBackground'
+                }`}>
+                    <div className="box">
                     <form onSubmit={handleImageUpload}>
                         <div className="field">
                             <label className="label">Seleccionar Imagen</label>
@@ -62,6 +70,7 @@ function ProfileImageModal({ isOpen, onClose, userId, onUpload }) {
                             {onUpload.isLoadingUpdate ? "Subiendo..." : "Subir"}
                         </button>
                     </form>
+                    </div>
                 </section>
             </div>
         </div>

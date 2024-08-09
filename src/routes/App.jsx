@@ -101,7 +101,7 @@ const App = createBrowserRouter([
                 element: <h1>Not Found</h1>,
             },
             {
-                path: "profile",
+                path: "/profile",
                 element: (
                     <ProtectedRoute>
                         <ProfileInfo />

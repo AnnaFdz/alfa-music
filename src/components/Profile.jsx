@@ -12,12 +12,8 @@ export default function Profile() {
             
              </p>
            <NavLink
-                        to="profile"
-                        style={({ isActive }) =>
-                            isActive ? { color: "red" } : {}
-                        }
-                       
-                    
+                        to="/profile"
+                                               
                         className=
                         {({ isActive, isPending, isTransitioning }) =>
                             [
