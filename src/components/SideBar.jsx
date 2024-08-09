@@ -43,10 +43,16 @@ function SideBar({playlistUpdated, setPlaylistUpdated, onPlaylistSelect}) {
             let nextUrl = url;
 
             while (nextUrl) {
+                if (nextUrl.startsWith('http://')) {
+                    nextUrl = nextUrl.replace('http://','https://');
+                }
                 const response = await fetch(nextUrl);
                 const data = await response.json();
                 allPlaylists = [...allPlaylists, ...data.results];
                 nextUrl = data.next;
+                if (nextUrl && nextUrl.startsWith('http://')) {
+                    nextUrl = nextUrl.replace('http://', 'https://');
+                }
             }
             setPlaylists(allPlaylists);
         } catch (error) {

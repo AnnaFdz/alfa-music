@@ -29,11 +29,17 @@ function AddSong() {
             let nextUrl = url;
 
             while (nextUrl) {
+                if (nextUrl.startsWith('http://')) {
+                    nextUrl = nextUrl.replace('http://','https://');
+                }
                 const response = await fetch(nextUrl);
                 if (!response.ok) throw new Error('La respuesta del server fue erronea');
                 const data = await response.json();
                 allAlbums = [...allAlbums, ...data.results];
                 nextUrl = data.next;
+                if (nextUrl && nextUrl.startsWith('http://')) {
+                    nextUrl = nextUrl.replace('http://', 'https://');
+                }
             }
             setAlbums(allAlbums);
         } catch (error) {
@@ -66,8 +72,6 @@ function AddSong() {
 
             if (!songResponse.ok) throw new Error('La respuesta del server fue erronea');
             const songResult = await songResponse.json();
-            console.log("ID song: ", songResult.file)
-            console.log(songResult)
 
             // agrego la canción a la playlist
             const updateResponse = await fetch(`https://sandbox.academiadevelopers.com/harmonyhub/playlist-entries/`, {
