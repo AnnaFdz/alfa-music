@@ -14,7 +14,6 @@ function AddSong() {
     const [title, setTitle] = useState("");
     const [songFile, setSongFile] = useState(null);
     const [albums, setAlbums] = useState([]);
-    const [selectedArtist, setSelectedArtist] = useState("");
     const [selectedAlbum, setSelectedAlbum] = useState("");
     const [isLoadingAlbum, setIsLoadingAlbum] = useState(false);
     const [isErrorAlbum, setIsErrorAlbum] = useState(false);
@@ -202,7 +201,6 @@ function AddSong() {
                                 Agregar Canción
                             </button>
                         </div>
-                        <div className="title mt-5">Elige una canción</div>
                         <div className="control m-4">
                             <button type="button" className="button is-primary" onClick={handleBack}>
                                 Volver
