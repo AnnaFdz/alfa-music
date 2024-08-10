@@ -1,15 +1,22 @@
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Songs from "./Songs";
+import SongsID from "./SongsID";
 
-export default function SelectedSong({ onSelectSong }) {
-    const [ selectedSongID, setSelectedSongID ] = useState(null);
+export default function SelectedSong() {
+    const navigate = useNavigate();
 
     const handleClick = (songID) => {
-        setSelectedSongID(songID);
-        onSelectSong(songID);
+        fetch(`https://sandbox.academiadevelopers.com/harmonyhub/songs/${songID}`)
+            .then(response => response.json())
+            .then(data => {
+                navigate("/createSong", { state: { songData: data } });
+            })
+            .catch(error => console.error('Error fetching song data:', error));
     };
 
     return (
-        <Songs onSelectSong={handleClick}/>
-    )
+        <div>
+            <SongsID onSelectSong={handleClick}/>
+        </div>
+    );
 }

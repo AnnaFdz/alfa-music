@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import "../styles/song.css";
-import Card from "./Card";
+import DeleteCard from "./DeleteCard";
 import useTheme from "../hooks/useTheme";
 import '../index.css';
-
-export default function Songs({ onSelectSong }) {
+import { useAuth } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
+    
+export default function DeleteSong() {
     const { theme } = useTheme();
     const [page, setPage] = useState(1);
     const [songs, setSongs] = useState([]);
@@ -14,6 +16,8 @@ export default function Songs({ onSelectSong }) {
     const [searchTitle, setSearchTitle] = useState({});
     const [inputValue, setInputValue] = useState("");
     const [inputWidth, setInputWidth] = useState(100);
+    const { userID } = useAuth("state");
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setInputValue(e.target.value);
@@ -26,6 +30,7 @@ export default function Songs({ onSelectSong }) {
         let query = new URLSearchParams({
             page: page,
             page_size: 4,
+            owner: `${userID}`,
             ...searchTitle,
         }).toString();
         try {
@@ -86,14 +91,22 @@ export default function Songs({ onSelectSong }) {
         setPage(1);
         setSongs([]);
     };
-        
+    const handleSongDeleted = () => {
+        setSearchTitle({});
+        setInputValue("");
+        setPage(1);
+        setSongs([]);
+    }
+    
     return (
-        <div className= "box2 " >
+        <>
+          <div className= "box2 " >
             <div className={`box ${
                 theme === 'pink'
                 ? 'pinkBackground'
                 : 'blueBackground'
             }`}>
+                <div className='main-content' style={{}}  >
             <form className= "box has-background-danger-70 search-form "
            
              onSubmit={handleSearch}>
@@ -124,16 +137,16 @@ export default function Songs({ onSelectSong }) {
                                 : 'blueBackground'
                               }`}>
                               <div className="box2" style={{backgroundColor: '#e98686', borderRadius: '0.75rem'}}>
-                                <h2 className="title">Canciones</h2>
+                                <h2 className="title">Eliminar Canciones</h2>
                                 <div className="columns" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'fit-content', minHeight: '200px' }}>
                                 {songs.length > 0 ? (
                                     songs.map((song) => (
-                                    <div key={song.id} className=" box2 column is-one-quarter" onClick={() => onSelectSong(song.id)}>
-                                        <Card song={song} />
+                                    <div key={song.id} className=" box2 column is-one-quarter" >
+                                        <DeleteCard song={song} onSongDeleted={handleSongDeleted} />
                                     </div>
                                  ))
                                 ) : (
-                                    !isLoading && <p className="title m-6 has-text-weight-medium">No se encontraron canciones con ese título.</p>
+                                    !isLoading && <p className="title m-6 has-text-weight-medium">No se encontraron canciones.</p>
                                 )}
                                 </div>
                                 {isLoading && <p>Cargando más canciones...</p>}
@@ -159,8 +172,18 @@ export default function Songs({ onSelectSong }) {
                     Next
                 </button>
                 </div>
+                <div className="control m-4">
+                    <button type="button" className="button is-primary" onClick={() => 
+                                { navigate("/") }} >
+                        Volver
+                    </button>
+                </div>
+                
+            </div>
             </div>
         </div>
+           
+        </>
+        
     );
 }
-

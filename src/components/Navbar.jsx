@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-import Logo from '../assets/Logointro.jpeg';
+import Logo from './imgs/Logointro.jpeg';
 import { useAuth } from "../contexts/AuthContext";
 import "../App.css";
 import ToggleTheme from "./ToggleTheme";

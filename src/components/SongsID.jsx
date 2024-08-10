@@ -3,9 +3,12 @@ import "../styles/song.css";
 import Card from "./Card";
 import useTheme from "../hooks/useTheme";
 import '../index.css';
+import { useAuth } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
-export default function Songs({ onSelectSong }) {
+export default function SongsID({ onSelectSong }) {
     const { theme } = useTheme();
+    const { userID } = useAuth("state");
     const [page, setPage] = useState(1);
     const [songs, setSongs] = useState([]);
     const [isError, setIsError] = useState(false);
@@ -14,6 +17,7 @@ export default function Songs({ onSelectSong }) {
     const [searchTitle, setSearchTitle] = useState({});
     const [inputValue, setInputValue] = useState("");
     const [inputWidth, setInputWidth] = useState(100);
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setInputValue(e.target.value);
@@ -27,6 +31,7 @@ export default function Songs({ onSelectSong }) {
             page: page,
             page_size: 4,
             ...searchTitle,
+            owner: userID
         }).toString();
         try {
             let url = `https://sandbox.academiadevelopers.com/harmonyhub/songs/?${query}`
@@ -87,8 +92,12 @@ export default function Songs({ onSelectSong }) {
         setSongs([]);
     };
         
+    const handleBack = () => {
+        navigate(-1);
+    };
+
     return (
-        <div className= "box2 " >
+        <div className= "box2 main-content">
             <div className={`box ${
                 theme === 'pink'
                 ? 'pinkBackground'
@@ -159,6 +168,9 @@ export default function Songs({ onSelectSong }) {
                     Next
                 </button>
                 </div>
+            <button className="button is-primary" onClick={handleBack}>
+                Volver
+            </button>
             </div>
         </div>
     );

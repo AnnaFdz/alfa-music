@@ -1,8 +1,7 @@
 import imgDefault from "../components/imgs/AT.jpeg";
-import useTheme from "../hooks/useTheme";
-export default function Card({ song }) {
-    const { theme } = useTheme();
 
+export default function Card({ song }) {
+    
     return (
         <div className="column">
             <div className="card">
