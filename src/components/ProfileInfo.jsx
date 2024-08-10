@@ -166,7 +166,7 @@ export default function ProfileInfo() {
                             className="button is-primary"
                             onClick={handleEditMode}
                         >
-                            {!editMode ? "Editar" : "Salir"}
+                            {!editMode ? <i className="fas fa-pencil-alt"></i> : <i className="delete" aria-label="close"></i>}
                         </button>
                     </div>
 
