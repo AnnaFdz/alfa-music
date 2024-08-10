@@ -21,7 +21,7 @@ export default function Layout() {
                     </div>
                 </ThemeProvider>
             </AuthProvider>
-            <div className="footer">
+            <div>
                 <FooterBar appName={"AlfA Music"}/>
             </div>
         </>

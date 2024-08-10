@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Songs from "./Songs";
+import SongsID from "./SongsID";
 
 export default function SelectedSong() {
     const navigate = useNavigate();
@@ -15,7 +16,7 @@ export default function SelectedSong() {
 
     return (
         <div>
-            <Songs onSelectSong={handleClick}/>
+            <SongsID onSelectSong={handleClick}/>
         </div>
     );
 }
