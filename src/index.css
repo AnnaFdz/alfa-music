@@ -149,5 +149,7 @@ audio{
   
   
 }
-
+.breadcrumb {
+  --bulma-breadcrumb-item-color: #e98686;
+}
 
