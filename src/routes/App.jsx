@@ -14,6 +14,8 @@ import ConfirmDelete from "../components/ConfirmDelete";
 import Playlist from "../components/Playlist";
 import AddSong from "../components/AddSong";
 import ProfileInfo from "../components/ProfileInfo";
+import NotFound from "../components/NotFound";
+import DeleteSong from "../components/DeleteSong";
 import CreateSong from "../components/CreateSong";
 import ModifySong from "../components/ModifySong";
 
@@ -100,13 +102,23 @@ const App = createBrowserRouter([
             },
             {
                 path: "*",
-                element: <h1>Not Found</h1>,
+                element: 
+                // <h1>Not Found</h1>,
+                <NotFound/>
             },
             {
                 path: "/profile",
                 element: (
                     <ProtectedRoute>
                         <ProfileInfo />
+                    </ProtectedRoute>
+                ),
+            },
+            {
+                path: "/deleteSong",
+                element: (
+                    <ProtectedRoute>
+                        <DeleteSong />
                     </ProtectedRoute>
                 ),
             },

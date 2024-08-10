@@ -4,6 +4,8 @@ import SideBar from "../components/SideBar";
 import { useState } from "react";
 import useTheme from "../hooks/useTheme";
 import "../styles/sidebar.css";
+import SongOptions from "./SongOptions";
+
 
 
 export default function Home() {
@@ -43,13 +45,16 @@ export default function Home() {
                   />
                 </div>
                  <div className='main-content'>
+                 <SongOptions/>
                     <div className='column'>
                         <div className={` ${
                           theme === 'pink'
                           ? 'pinkBackground'
                           : 'blueBackground'
                           }`}>
+                            
                           <div className="columns">
+                          
                           <Songs/>
                           </div>
                         </div>
