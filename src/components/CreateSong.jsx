@@ -8,7 +8,7 @@ function CreateSong() {
     const { theme } = useTheme();
     const navigate = useNavigate();
     const location = useLocation();
-    const songData = location.state?.songData || null; // Retrieve song data from navigation state
+    const songData = location.state?.songData || null;
     const [title, setTitle] = useState(songData ? songData.title : '');
     const [selectedAlbum, setSelectedAlbum] = useState(songData ? songData.album : '');
     const [songFile, setSongFile] = useState(null);
@@ -108,7 +108,6 @@ function CreateSong() {
                         <select
                             value={selectedAlbum || ''}
                             onChange={(e) => setSelectedAlbum(e.target.value)}
-                            required
                         >
                             <option value="">Seleccione un álbum</option>
                             {albums.length > 0 ? (
@@ -132,7 +131,7 @@ function CreateSong() {
                         type="file"
                         accept="audio/*"
                         onChange={(e) => setSongFile(e.target.files[0])}
-                        required={!songData} // Only required if not editing
+                        required={!songData}
                     />
                 </div>
             </div>

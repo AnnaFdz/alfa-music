@@ -14,6 +14,7 @@
   width: calc(100% - 10rem);
   height: 100vh;
   overflow: auto;
+  box-sizing: border-box;
 }
 
 .containerT {
@@ -152,4 +153,3 @@ audio{
 .breadcrumb {
   --bulma-breadcrumb-item-color: #e98686;
 }
-
