@@ -4,6 +4,7 @@ import DeleteCard from "./DeleteCard";
 import useTheme from "../hooks/useTheme";
 import '../index.css';
 import { useAuth } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
     
 export default function DeleteSong() {
     const { theme } = useTheme();
@@ -16,6 +17,7 @@ export default function DeleteSong() {
     const [inputValue, setInputValue] = useState("");
     const [inputWidth, setInputWidth] = useState(100);
     const { userID } = useAuth("state");
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setInputValue(e.target.value);
@@ -104,6 +106,7 @@ export default function DeleteSong() {
                 ? 'pinkBackground'
                 : 'blueBackground'
             }`}>
+                <div className='main-content' style={{}}  >
             <form className= "box has-background-danger-70 search-form "
            
              onSubmit={handleSearch}>
@@ -169,6 +172,14 @@ export default function DeleteSong() {
                     Next
                 </button>
                 </div>
+                <div className="control m-4">
+                    <button type="button" className="button is-primary" onClick={() => 
+                                { navigate("/") }} >
+                        Volver
+                    </button>
+                </div>
+                
+            </div>
             </div>
         </div>
            
