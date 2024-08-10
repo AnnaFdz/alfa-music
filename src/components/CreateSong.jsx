@@ -80,11 +80,22 @@ function CreateSong() {
     if (isErrorAlbum) return <h1>Error loading albums</h1>;
 
     return (
-        <form onSubmit={handleSubmit} className={`box ${
+        <div className={`box box3  ${
             theme === 'pink'
             ? 'pinkBackground'
             : 'blueBackground'
-        }`}>
+        }`} >
+        <div className='card' 
+            
+        style={{
+            display: "flex",
+            gap: "0.5rem",
+            alignItems: "center",
+            marginBottom: "0.5rem",
+            flexDirection: "column",
+            backgroundColor: '#e98686'
+        }}>
+        <form onSubmit={handleSubmit} className="card-content">
             <div className="title">{songData ? 'Modificar Canción' : 'Sube una canción nueva'}</div>
             <div className="field">
                 <label className="label">Título</label>
@@ -148,6 +159,8 @@ function CreateSong() {
                 </div>
             </div>
         </form>
+        </div>
+        </div>
     )
 }
 

@@ -168,7 +168,7 @@ export default function SongsID({ onSelectSong }) {
                     Next
                 </button>
                 </div>
-            <button className="button is-danger" onClick={handleBack}>
+            <button className="button is-primary" onClick={handleBack}>
                 Volver
             </button>
             </div>
